@@ -1,1 +1,78 @@
-/Users/aaronparisi/dotfiles/.vimrc
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'
+Plug 'neoclide/coc-eslint'
+Plug 'neoclide/coc-prettier'
+Plug 'neoclide/coc.nvim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'leafgarland/typescript-vim'
+Plug 'KabbAmine/vCoolor.vim'
+Plug 'tpope/vim-abolish'
+Plug 'ap/vim-css-color'
+Plug 'ryanoasis/vim-devicons'
+Plug 'blueyed/vim-diminactive'
+Plug 'tpope/vim-endwise'
+Plug 'takac/vim-hardtime'
+Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'leafOfTree/vim-matchtag'
+Plug 'styled-components/vim-styled-components'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
+Plug 'romkatv/powerlevel10k'
+Plug 'ap/vim-buftabline'
+Plug 'ayu-theme/ayu-vim'
+call plug#end()
+
+let g:hardtime_default_on = 1
+
+let g:airline_powerline_fonts = 1
+
+set termguicolors
+let ayucolor="dark"
+colorscheme ayu
+
+syntax on
+set number relativenumber
+highlight Normal ctermbg=None
+highlight LineNr ctermfg=37
+
+set tabstop=4
+set shiftwidth=4
+
+set belloff=all
+
+hi ColorColumn guibg=#5F3715
+
+let mapleader = ","
+
+nnoremap <leader>x :Explore<CR>
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_browse_split = 0
+
+nnoremap <leader>c :noh<CR>
+nnoremap <c-p> :CtrlP<CR>
+
+let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
+
+nnoremap <c-j> :bp<CR>
+nnoremap <c-k> :bn<CR>
+
+let &t_SI = "\<Esc>]50;CursorShape=2\x7"
+let &t_SR = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+set timeoutlen=1000
+set ttimeoutlen=5
+
+:nnoremap n nzz
+:nnoremap N Nzz
+:nnoremap * *zz
+:nnoremap # #zz
+:nnoremap g* g*zz
+:nnoremap g# g#zz
+
