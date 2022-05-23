@@ -1,8 +1,27 @@
-nyt_response=$(curl "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=TCFjpTQnj7jzvmtelNVLTvRbQZAnqWnH")
-# echo "$nyt_response"
-jq -r '.results[] | "\u001b]8;;\(.url)\u0007\(.title)\u001b]8;;\u0007"' <<<"$nyt_response"
+numterms=$(~/numterms.sh)
+prevnumterms=$(cat ./prevnumterms.txt)
 
-curl wttr.in
+if (( $numterms > prevnumterms )); then
+	# get nyt headlines and print links for them
+	nyt_response=$(curl "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=TCFjpTQnj7jzvmtelNVLTvRbQZAnqWnH")
+	jq -r '.results[] | "\u001b]8;;\(.url)\u0007\(.title)\u001b]8;;\u0007"' <<<"$nyt_response"
+
+	echo
+	echo
+
+	# print out local weather
+	curl wttr.in
+else
+	ps aux
+fi
+
+echo $numterms > ~/prevnumterms.txt
+
+#TRAPEXIT() {
+#	echo "inside TRAPEXIT"
+#	sleep 1
+#	echo $( ~/numterms.sh ) > ~/prevnumterms.txt
+#}
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -16,6 +35,8 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+
+export MANPAGER="vim -M +MANPAGER -"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -83,7 +104,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git wd  zsh-syntax-highlighting)
+plugins=(git wd  zshmarks zsh-syntax-highlighting zsh-vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -112,10 +133,23 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+alias cd='cd ${1} && ja'
+
 alias ja='exa --grid --icons --all --all --group-directories-first'
 alias jao='exa --oneline --all --all --icons --group-directories-first'
 alias jal='exa --long --all --all'
 alias jat='exa --tree --level=2'
+
+alias gm="jump"
+alias sm="bookmark"
+alias dm="deletemark"
+alias pm="showmarks"
+
+function chpwd_do_ja () {
+	ja
+}
+chpwd_functions=( chpwd_do_ja )
 
 declare -a SCOLDS
 SCOLDS=(
@@ -137,9 +171,15 @@ alias vimz='vim ~/.zshrc'
 alias vimv='vim ~/.vimrc'
 
 alias sc='source ~/.zshrc'
+alias ez='exec zsh'
 
 alias confgit='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+# zsh vi mode
+ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
+ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_UNDERLINE
 

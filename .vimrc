@@ -23,10 +23,11 @@ Plug 'styled-components/vim-styled-components'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'romkatv/powerlevel10k'
-Plug 'ap/vim-buftabline'
+"Plug 'ap/vim-buftabline'
 Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
+let g:airline#extensions#tabline#enabled = 1
 let g:hardtime_default_on = 1
 
 let g:airline_powerline_fonts = 1
@@ -40,10 +41,16 @@ set number relativenumber
 highlight Normal ctermbg=None
 highlight LineNr ctermfg=37
 
+highlight MatchParen  guibg=#00FF00 guifg=#111111
+highlight LineNr guifg=#525252
+highlight Directory guifg=#F06314
+
 set tabstop=4
 set shiftwidth=4
 
 set belloff=all
+set showcmd
+set ignorecase
 
 hi ColorColumn guibg=#5F3715
 
@@ -69,10 +76,25 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 set timeoutlen=1000
 set ttimeoutlen=5
 
-:nnoremap n nzz
-:nnoremap N Nzz
-:nnoremap * *zz
-:nnoremap # #zz
-:nnoremap g* g*zz
-:nnoremap g# g#zz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+
+let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_disabled_keys = []
+
+set formatoptions-=cro
+autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
+
+set scrolloff=10
+
+set hlsearch
+hi Search guibg=#797300
+
+autocmd FileType help setlocal number relativenumber
 
