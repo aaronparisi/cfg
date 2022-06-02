@@ -1,21 +1,24 @@
-numterms=$(~/numterms.sh)
-prevnumterms=$(cat ./prevnumterms.txt)
+printf '\n%.0s' {1..100}
+#
+# numterms=$(~/numterms.sh)
+# prevnumterms=$(cat ./prevnumterms.txt)
+# 
+# # if (( $numterms > prevnumterms )); then
+# if (( false )); then
+# 	# get nyt headlines and print links for them
+# 	nyt_response=$(curl "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=TCFjpTQnj7jzvmtelNVLTvRbQZAnqWnH")
+# 	jq -r '.results[] | "\u001b]8;;\(.url)\u0007\(.title)\u001b]8;;\u0007"' <<<"$nyt_response"
+# 
+# 	echo
+# 	echo
+# 
+# 	# print out local weather
+# 	curl wttr.in
+# else
+# 	ps aux
+# fi
 
-if (( $numterms > prevnumterms )); then
-	# get nyt headlines and print links for them
-	nyt_response=$(curl "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=TCFjpTQnj7jzvmtelNVLTvRbQZAnqWnH")
-	jq -r '.results[] | "\u001b]8;;\(.url)\u0007\(.title)\u001b]8;;\u0007"' <<<"$nyt_response"
-
-	echo
-	echo
-
-	# print out local weather
-	curl wttr.in
-else
-	ps aux
-fi
-
-echo $numterms > ~/prevnumterms.txt
+# echo $numterms > ~/prevnumterms.txt
 
 #TRAPEXIT() {
 #	echo "inside TRAPEXIT"
@@ -106,6 +109,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git wd  zshmarks zsh-syntax-highlighting zsh-vi-mode)
 
+export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -133,8 +137,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-alias cd='cd ${1} && ja'
 
 alias ja='exa --grid --icons --all --all --group-directories-first'
 alias jao='exa --oneline --all --all --icons --group-directories-first'
@@ -182,4 +184,3 @@ alias confgit='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # zsh vi mode
 ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
 ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_UNDERLINE
-

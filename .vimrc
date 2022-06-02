@@ -24,6 +24,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'romkatv/powerlevel10k'
 "Plug 'ap/vim-buftabline'
+Plug 'xolox/vim-lua-ftplugin'
+Plug 'xolox/vim-misc'
 Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
@@ -44,13 +46,17 @@ highlight LineNr ctermfg=37
 highlight MatchParen  guibg=#00FF00 guifg=#111111
 highlight LineNr guifg=#525252
 highlight Directory guifg=#F06314
+highlight StatusLine guifg=#525252
 
 set tabstop=4
 set shiftwidth=4
 
 set belloff=all
+"set vb
 set showcmd
 set ignorecase
+
+set matchpairs+=<:>
 
 hi ColorColumn guibg=#5F3715
 
@@ -94,7 +100,13 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 set scrolloff=10
 
 set hlsearch
-hi Search guibg=#797300
+hi Search guibg=#858585
 
 autocmd FileType help setlocal number relativenumber
 
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undo//
+
+
+set showcmd
