@@ -148,6 +148,8 @@ alias sm="bookmark"
 alias dm="deletemark"
 alias pm="showmarks"
 
+alias chrome="open -a 'Google Chrome'"
+
 function chpwd_do_ja () {
 	ja
 }
@@ -155,19 +157,11 @@ chpwd_functions=( chpwd_do_ja )
 
 declare -a SCOLDS
 SCOLDS=(
-	"CLEAR! </3"
-	"Quick, clear a space, this is where the spaceship lands!"
-	"Clearly, you haven't learned your lesson."
-	"Make like acne and clear up."
-	"I can see clearly now, the text is gone... oh wait..."
-	"Let me be clear: the prompt will stay at the bottom of the screen!"
-	"This coding shit is clear as mud."
-	"Clear your mind, not the terminal."
-	"Clear your schedule, not the terminal."
-	"We are cleared for takeoff!"
+	"rm is a dangerous command."
+	"Read the error message."
 )
-alias clear='echo ${SCOLDS[ $RANDOM % ${#SCOLDS[@]} ]}'
-alias c='echo ${SCOLDS[ $RANDOM % ${#SCOLDS[@]} ]}'
+alias clear='echo ${SCOLDS[ $RANDOM % ${#SCOLDS[@]} + 1 ]}'
+alias c='clear'
 
 alias vimz='vim ~/.zshrc'
 alias vimv='vim ~/.vimrc'
