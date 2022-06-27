@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'morhetz/gruvbox'
 Plug 'othree/xml.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -41,7 +42,8 @@ let g:airline_powerline_fonts = 1
 
 set termguicolors
 let ayucolor="dark"
-colorscheme ayu
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
 
 syntax on
 set number relativenumber
@@ -98,8 +100,11 @@ nnoremap <c-p> :CtrlP<CR>
 nnoremap ; :
 nnoremap : ;
 
-nnoremap <c-i> :cnext<CR>
-nnoremap <c-u> :cprev<CR>
+command! Cnext try | cnext | catch | cfirst | catch | endtry
+command! Cprev try | cprev | catch | clast | catch | endtry
+
+nnoremap <c-i> :Cnext<CR>
+nnoremap <c-u> :Cprev<CR>
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 

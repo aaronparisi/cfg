@@ -3,5 +3,5 @@
 	"coc.preferences.formatOnSaveFiletypes": ["*"],
 	"coc.preferences.jumpCommand": "edit",
 	"prettier.useTabs": true,
-	"prettier.tabWidth": 4
+	"prettier.tabWidth": 2
 }
