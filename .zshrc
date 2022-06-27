@@ -149,6 +149,7 @@ alias dm="deletemark"
 alias pm="showmarks"
 
 alias chrome="open -a 'Google Chrome'"
+alias copypath="pwd|pbcopy"
 
 function chpwd_do_ja () {
 	ja

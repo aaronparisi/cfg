@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'othree/xml.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
@@ -52,8 +53,8 @@ highlight LineNr guifg=#525252
 highlight Directory guifg=#F06314
 highlight StatusLine guifg=#525252
 
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set cindent
 set hidden
 set breakindent
@@ -96,6 +97,9 @@ nnoremap <c-p> :CtrlP<CR>
 
 nnoremap ; :
 nnoremap : ;
+
+nnoremap <c-i> :cnext<CR>
+nnoremap <c-u> :cprev<CR>
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 
