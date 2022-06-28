@@ -56,6 +56,7 @@ highlight Directory guifg=#F06314
 highlight StatusLine guifg=#525252
 
 set tabstop=2
+set expandtab
 set shiftwidth=2
 set cindent
 set hidden
