@@ -1,9 +1,10 @@
 {
   "suggest.noselect": false,
-  "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "coc.preferences.formatOnSaveFiletypes": [],
   "coc.preferences.jumpCommand": "edit",
   "prettier.useTabs": false,
   "prettier.tabWidth": 2,
   "prettier.semi": false,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "prettier.arrowParens": "avoid"
 }

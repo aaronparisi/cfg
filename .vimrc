@@ -5,8 +5,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim'
-Plug 'neoclide/coc-eslint'
-Plug 'neoclide/coc-prettier'
+"Plug 'neoclide/coc-eslint'
+"Plug 'neoclide/coc-prettier'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'leafgarland/typescript-vim'
@@ -35,7 +35,7 @@ Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
 let g:hardtime_default_on = 1
 
 let g:airline_powerline_fonts = 1
@@ -50,7 +50,7 @@ set number relativenumber
 highlight Normal ctermbg=None
 highlight LineNr ctermfg=37
 
-highlight MatchParen  guibg=#00FF00 guifg=#111111
+highlight MatchParen  guibg=#ffa064 guifg=#111111
 highlight LineNr guifg=#525252
 highlight Directory guifg=#F06314
 highlight StatusLine guifg=#525252
@@ -63,11 +63,13 @@ set hidden
 set breakindent
 set backspace=indent
 
+"set wildmenu
+
 hi CursorLine guibg=#003F4B
 
 augroup CursorLine
 	au!
-	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline 
+	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
 	au WinLeave * setlocal nocursorline
 augroup END
 
@@ -77,6 +79,7 @@ set showcmd
 set ignorecase
 set foldmethod=indent
 set foldlevel=0
+hi Folded guibg=#0B0B0B
 
 augroup vimrc
   au BufReadPre * setlocal foldmethod=indent
@@ -85,7 +88,7 @@ augroup END
 
 set matchpairs+=<:>
 
-hi ColorColumn guibg=#603816
+hi ColorColumn guibg=#321F0D
 
 let mapleader = ","
 
@@ -97,6 +100,9 @@ let g:netrw_browse_split = 0
 nnoremap <leader>c :noh<CR>
 nnoremap <c-p> :CtrlP<CR>
 " this is a comment, feel free to delete if you ever notice me again.  Sigh.
+" ^^ I noticed you on June 28, 2022, and you are beautiful.
+
+nnoremap <leader>s :source ~/.vimrc<CR>
 
 nnoremap ; :
 nnoremap : ;
@@ -104,10 +110,15 @@ nnoremap : ;
 command! Cnext try | cnext | catch | cfirst | catch | endtry
 command! Cprev try | cprev | catch | clast | catch | endtry
 
-nnoremap <c-i> :Cnext<CR>
-nnoremap <c-u> :Cprev<CR>
+command -nargs=+ Megrep vimgrep /<args>/ `git ls-files`
+
+nnoremap :cnext<CR> :Cnext<CR>
+nnoremap :cprev<CR> :Cprev<CR>
+nnoremap <leader>r :Cnext<CR>
+nnoremap <leader>e :Cprev<CR>
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
+set wrap linebreak nolist
 
 nnoremap <c-j> :bp<CR>
 nnoremap <c-k> :bn<CR>
@@ -135,10 +146,11 @@ let g:hardtime_timeout = 250
 set formatoptions-=cro
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-set scrolloff=10
+set scrolloff=1
 
 set hlsearch
-hi Search guibg=#858585
+set incsearch
+" hi Search guibg=#858585
 
 autocmd FileType help setlocal number relativenumber
 
@@ -149,6 +161,6 @@ set undodir=~/.vim/undo//
 
 set showcmd
 
-" testing some auto save shortcuts 
+" testing some auto save shortcuts
 	" as well as some backspace settings
 " looks like they work!
