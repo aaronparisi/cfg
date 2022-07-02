@@ -1,38 +1,38 @@
 call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
-Plug 'othree/xml.vim'
-Plug 'vim-airline/vim-airline'
+Plug 'othree/xml.vim' "for auto-closing and auto-indenting html tags
+Plug 'vim-airline/vim-airline' "makes the status bar at the bottom do cool stuff
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-surround'
-Plug 'neoclide/coc.nvim'
+Plug 'tpope/vim-surround' "for surrounding things with parens, etc etc etc
+Plug 'neoclide/coc.nvim' "auto-completion, etc etc etc
 "Plug 'neoclide/coc-eslint'
 "Plug 'neoclide/coc-prettier'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tpope/vim-fugitive'
+Plug 'ctrlpvim/ctrlp.vim' "fuzzy finder
+Plug 'tpope/vim-fugitive' "enables git command execution, I use it for blame
 Plug 'leafgarland/typescript-vim'
-Plug 'KabbAmine/vCoolor.vim'
-Plug 'tpope/vim-abolish'
-Plug 'ap/vim-css-color'
-Plug 'ryanoasis/vim-devicons'
-Plug 'blueyed/vim-diminactive'
-Plug 'tpope/vim-endwise'
-Plug 'takac/vim-hardtime'
-Plug 'sheerun/vim-polyglot'
+Plug 'KabbAmine/vCoolor.vim' "modifying color codes via a color picker
+Plug 'tpope/vim-abolish' "enhances substition eg repetition for case sensitivity
+Plug 'ap/vim-css-color' "highlight hex codes with their color
+Plug 'ryanoasis/vim-devicons' "adds icons to things like CtrlP, airline status bar
+Plug 'blueyed/vim-diminactive' "uses colorcolumn to 'dim' inactive windows
+Plug 'tpope/vim-endwise' "auto-complete if, do, def, etc
+Plug 'takac/vim-hardtime' "prevent 'cheating'
+Plug 'sheerun/vim-polyglot' "'collection of language packs for vim'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'peitalin/vim-jsx-typescript'
-Plug 'leafOfTree/vim-matchtag'
+Plug 'leafOfTree/vim-matchtag' "highlights matching html tags
 Plug 'styled-components/vim-styled-components'
-Plug 'tpope/vim-vinegar'
-Plug 'romkatv/powerlevel10k'
+Plug 'tpope/vim-vinegar' "provides functionality to enhance the use of netrw
+"Plug 'romkatv/powerlevel10k'
 "Plug 'ap/vim-buftabline'
-Plug 'xolox/vim-lua-ftplugin'
-Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-lua-ftplugin'
+"Plug 'xolox/vim-misc' "I think I installed this so the lua plugin would work?
 Plug 'ayu-theme/ayu-vim'
 Plug 'moll/vim-node'
 Plug 'myhere/vim-nodejs-complete'
 Plug 'grvcoelho/vim-javascript-snippets'
-Plug 'alvan/vim-closetag'
-Plug 'jiangmiao/auto-pairs'
+"Plug 'alvan/vim-closetag' "I think this duplicates the behavior of xml.vim
+Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
 call plug#end()
 
 "let g:airline#extensions#tabline#enabled = 1
@@ -41,7 +41,7 @@ let g:hardtime_default_on = 1
 let g:airline_powerline_fonts = 1
 
 set termguicolors
-let ayucolor="dark"
+"let ayucolor="dark"
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 
@@ -64,14 +64,18 @@ set breakindent
 set backspace=indent
 
 "set wildmenu
+set iskeyword-=_
 
-hi CursorLine guibg=#003F4B
+hi CursorLine guibg=#1A1A1A
+hi CursorColumn guibg=#1A1A1A
+"set cursorline cursorcolumn
+nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
-augroup CursorLine
-	au!
-	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-	au WinLeave * setlocal nocursorline
-augroup END
+"augroup CursorLine
+"	au!
+"	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline cursorcolumn
+"	au WinLeave * setlocal nocursorline nocursorcolumn
+"augroup END
 
 set belloff=all
 "set vb
@@ -92,15 +96,14 @@ hi ColorColumn guibg=#321F0D
 
 let mapleader = ","
 
-nnoremap <leader>x :Explore<CR>
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 let g:netrw_browse_split = 0
 
-nnoremap <leader>c :noh<CR>
 nnoremap <c-p> :CtrlP<CR>
 " this is a comment, feel free to delete if you ever notice me again.  Sigh.
 " ^^ I noticed you on June 28, 2022, and you are beautiful.
+" If I feel guilted to add to this every fucking time I see it I'm gonna be upset - July 1, 2022
 
 nnoremap <leader>s :source ~/.vimrc<CR>
 
@@ -119,9 +122,6 @@ nnoremap <leader>e :Cprev<CR>
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak nolist
-
-nnoremap <c-j> :bp<CR>
-nnoremap <c-k> :bn<CR>
 
 let &t_SI = "\<Esc>]50;CursorShape=2\x7"
 let &t_SR = "\<Esc>]50;CursorShape=1\x7"
