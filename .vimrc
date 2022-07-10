@@ -48,6 +48,7 @@ let g:gruvbox_contrast_dark = 'hard'
 
 syntax on
 set number relativenumber
+highlight CursorLineNR guibg=#0f0f0f guifg=#9E9E9E
 "set number 
 highlight Normal ctermbg=None
 highlight LineNr ctermfg=37
@@ -103,9 +104,11 @@ set ignorecase
 set foldmethod=indent
 set foldlevel=0
 hi Folded guibg=#0f0f0f guifg=#37342D
+highlight foldcolumn guibg=#0f0f0f
 set foldcolumn=1
 
-highlight SignColumn guibg=#1A1A1A
+set signcolumn=no
+highlight SignColumn guibg=#0f0f0f
 function! MyFoldText()
   return ""
 endfunction
