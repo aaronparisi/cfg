@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-commentary'
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'morhetz/gruvbox'
 Plug 'othree/xml.vim' "for auto-closing and auto-indenting html tags
@@ -51,14 +52,16 @@ set number relativenumber
 highlight CursorLineNR guibg=#0f0f0f guifg=#9E9E9E
 "set number 
 highlight Normal ctermbg=None
-highlight LineNr ctermfg=37
 
 highlight MatchParen  guibg=#ffa064 guifg=#111111
-highlight LineNr guifg=#525252
+highlight LineNr guifg=#3C3C3C
 highlight Directory guifg=#F06314
-highlight StatusLine guifg=#301302
+highlight StatusLine guibg=#828282 guifg=#301302
 set laststatus=2
 set ruler
+
+let g:vim_matchtag_enable_by_default = 1
+let g:vim_matchtag_files = '*.html,*.xml,*.js,*.jsx'
 
 set statusline=
 
@@ -102,15 +105,19 @@ set belloff=all
 set showcmd
 set ignorecase
 set foldmethod=indent
+set foldenable
 set foldlevel=0
-hi Folded guibg=#0f0f0f guifg=#37342D
-highlight foldcolumn guibg=#0f0f0f
+hi Folded guibg=#0f0f0f guifg=#734C0A
+highlight foldcolumn guibg=#301302 guifg=#734C0A
 set foldcolumn=1
+set foldminlines=0
+"set fillchars=fold:\ 
 
 set signcolumn=no
 highlight SignColumn guibg=#0f0f0f
 function! MyFoldText()
-  return ""
+  const foldindicator = "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
+  return v:folddashes . v:folddashes . foldindicator
 endfunction
 set foldtext=MyFoldText()
 
@@ -225,8 +232,10 @@ command! Goj call GotoJump()
 autocmd FileType help nnoremap <buffer> s /^\?=$/1<CR>zt :noh<CR>
 autocmd FileType help nnoremap <buffer> S 2?^\==$?1<CR>zt :noh<CR>
 
-nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'gk'
-nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'gj'
+"nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'gk'
+"nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+nnoremap <expr> j v:count ? 'j' : 'gj'
 
 call jspretmpl#register_tag('html', 'html')
 call jspretmpl#register_tag('/*html*/', 'html')
