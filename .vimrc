@@ -116,15 +116,15 @@ set foldminlines=0
 set signcolumn=no
 highlight SignColumn guibg=#0f0f0f
 function! MyFoldText()
-  const foldindicator = "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
+  const foldindicator = "|----------|----------|----------|----------|"
   return v:folddashes . v:folddashes . foldindicator
 endfunction
 set foldtext=MyFoldText()
 
-augroup vimrc
-  au BufReadPre * setlocal foldmethod=indent
-  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-augroup END
+" augroup vimrc
+"   au BufReadPre * setlocal foldmethod=indent
+"   au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+" augroup END
 
 set matchpairs+=<:>
 
