@@ -11,7 +11,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'KabbAmine/vCoolor.vim' "modifying color codes via a color picker
 Plug 'tpope/vim-abolish' "enhances substition eg repetition for case sensitivity
 Plug 'ap/vim-css-color' "highlight hex codes with their color
-Plug 'ryanoasis/vim-devicons' "adds icons to things like CtrlP, airline status bar
 Plug 'blueyed/vim-diminactive' "uses colorcolumn to 'dim' inactive windows
 Plug 'tpope/vim-endwise' "auto-complete if, do, def, etc
 " Plug 'sheerun/vim-polyglot' "'collection of language packs for vim'
@@ -21,7 +20,6 @@ Plug 'tpope/vim-endwise' "auto-complete if, do, def, etc
 Plug 'styled-components/vim-styled-components'
 Plug 'tpope/vim-vinegar' "provides functionality to enhance the use of netrw
 Plug 'romkatv/powerlevel10k'
-Plug 'ap/vim-buftabline'
 Plug 'xolox/vim-lua-ftplugin'
 Plug 'xolox/vim-misc' "I think I installed this so the lua plugin would work?
 Plug 'ayu-theme/ayu-vim'
@@ -46,7 +44,9 @@ set ruler
 let g:vim_matchtag_enable_by_default = 1
 let g:vim_matchtag_files = '*.html,*.xml,*.js,*.jsx'
 
-highlight StatusLine guifg=#6c2b0a guibg=#EBF000
+set showtabline=0
+
+highlight StatusLine guifg=#BA4B07 guibg=#0f0f0f
 highlight StatusLineNC guifg=#6c2b0a guibg=#0f0f0f
 
 set statusline=
@@ -64,6 +64,7 @@ let g:currentmode={
 
 set statusline+=\ %{toupper(g:currentmode[mode()])}
 set statusline+=%<%F\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline+=%{FugitiveStatusline()}
 
 set tabstop=2
 set expandtab
@@ -77,11 +78,11 @@ set backspace=indent
 set iskeyword-=_
 
 hi clear CursorLine
-" set cursorlineopt=screenline
+set cursorlineopt=number
 set cursorline 
 
-highlight LineNr guifg=#59580F
-"highlight CursorLineNr guifg=#6c2b0a 
+highlight LineNr guifg=#763B09
+highlight CursorLineNr guifg=#ff6600 
 
 set belloff=all
 "set vb
@@ -90,8 +91,8 @@ set ignorecase
 set foldmethod=indent
 set foldenable
 set foldlevel=0
-hi Folded guibg=#0f0f0f guifg=#734C0A
-highlight foldcolumn guibg=#6c2b0a guifg=#B77509
+hi Folded guifg=#763B09 guibg=#0f0f0f
+highlight foldcolumn guibg=#0f0f0f guifg=#763B09
 set foldcolumn=1
 set foldminlines=0
 "set fillchars=fold:\
@@ -99,10 +100,12 @@ set foldminlines=0
 set signcolumn=no
 highlight SignColumn guibg=#0f0f0f
 function! MyFoldText()
-  const foldindicator = "|----------|----------|----------|----------|"
+  const foldindicator = "|"
   return v:folddashes . v:folddashes . foldindicator
 endfunction
 set foldtext=MyFoldText()
+
+" set foldopen-=search
 
 set matchpairs+=<:>
 
@@ -124,6 +127,7 @@ nnoremap <leader>s :source ~/.vimrc<CR>
 "nnoremap <leader>x :syntax sync fromstart<CR>
 
 nnoremap ; :
+nnoremap : ;
 
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
@@ -136,29 +140,29 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 set timeoutlen=1000
 set ttimeoutlen=5
 
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
+" nnoremap n nzz
+" nnoremap N Nzz
+" nnoremap * *zz
+" nnoremap # #zz
+" nnoremap g* g*zz
+" nnoremap g# g#zz
 
 let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_disabled_keys = []
-let g:hardtime_timeout = 250
+let g:hardtime_timeout = 2500
+let g:hardtime_default_on=1
 
 set formatoptions-=cro
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-set scrolloff=5
+set scrolloff=10
 
 set hlsearch
 set incsearch
 
 autocmd FileType help setlocal number relativenumber
-"autocmd FileType help setlocal number
 
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
@@ -215,7 +219,7 @@ set nospell
 
 let @/ = ""
 
-highlight Search guibg=#BFC205
+highlight Search guibg=#800080 guifg=#ff6600
 
 highlight Pmenu guibg=#800080 guifg=#ff6600
 highlight PmenuSel guibg=#ff6600 guifg=#0f0f0f
@@ -232,9 +236,14 @@ highlight CocHintSign guifg=#0f0f0f
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak nolist
 
-highlight MatchParen guibg=#fffe04 guifg=#0f0f0f
+highlight VertSplit guifg=#800080 guibg=#ff6600
+highlight MatchParen guibg=#800080 guifg=#ff6600
 
 nnoremap z f
+nnoremap Z F
 nnoremap f z
-noremap zf zz
-noremap zz zz
+nnoremap ff zz
+
+highlight Comment guifg=#8E3C0B 
+highlight NonText guifg=#763B09
+

@@ -39,7 +39,7 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-export MANPAGER="vim -M +MANPAGER -"
+export MANPAGER="vim -M +MANPAGER -c 'syntax off' -c 'set foldlevel=9999' -"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -138,8 +138,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ja='exa --grid --icons --all --all --group-directories-first'
-alias jao='exa --oneline --all --all --icons --group-directories-first'
+alias ja='exa --grid --classify --all --all --group-directories-first'
+alias jao='exa --oneline --all --all --classify --group-directories-first'
 alias jal='exa --long --all --all'
 alias jat='exa --tree --level=2'
 
@@ -179,3 +179,5 @@ alias confgit='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # zsh vi mode
 ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
 ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_UNDERLINE
+
+# ignore me
