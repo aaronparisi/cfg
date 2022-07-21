@@ -1,0 +1,6 @@
+{
+  "suggest.noselect": false,
+  "coc.preferences.formatOnSaveFiletypes": [],
+  "coc.preferences.jumpCommand": "edit",
+  "signature.target": "echo"
+}

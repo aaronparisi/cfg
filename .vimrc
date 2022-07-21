@@ -19,14 +19,14 @@ Plug 'tpope/vim-endwise' "auto-complete if, do, def, etc
 " Plug 'leafOfTree/vim-matchtag' "highlights matching html tags
 Plug 'styled-components/vim-styled-components'
 Plug 'tpope/vim-vinegar' "provides functionality to enhance the use of netrw
-Plug 'romkatv/powerlevel10k'
-Plug 'xolox/vim-lua-ftplugin'
+" Plug 'romkatv/powerlevel10k'
+" Plug 'xolox/vim-lua-ftplugin'
 Plug 'xolox/vim-misc' "I think I installed this so the lua plugin would work?
-Plug 'ayu-theme/ayu-vim'
+" Plug 'ayu-theme/ayu-vim'
 Plug 'moll/vim-node'
 Plug 'myhere/vim-nodejs-complete'
 Plug 'grvcoelho/vim-javascript-snippets'
-Plug 'alvan/vim-closetag' "I think this duplicates the behavior of xml.vim
+" Plug 'alvan/vim-closetag' "I think this duplicates the behavior of xml.vim
 Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
 call plug#end()
 
@@ -151,7 +151,7 @@ let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<L
 let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_disabled_keys = []
-let g:hardtime_timeout = 2500
+let g:hardtime_timeout = 250
 let g:hardtime_default_on=1
 
 set formatoptions-=cro
@@ -198,8 +198,8 @@ autocmd FileType help nnoremap <buffer> S 2?^\==$?1<CR>zt :noh<CR>
 
 "nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'gk'
 "nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'gj'
-nnoremap <expr> k v:count ? 'k' : 'gk'
-nnoremap <expr> j v:count ? 'j' : 'gj'
+" nnoremap <expr> k v:count ? 'k' : 'gk'
+" nnoremap <expr> j v:count ? 'j' : 'gj'
 
 call jspretmpl#register_tag('html', 'html')
 call jspretmpl#register_tag('/*html*/', 'html')
@@ -233,6 +233,22 @@ highlight CocHintHighlight guibg=#005E63
 highlight CocUnusedHighlight guibg=#391A08
 highlight CocHintSign guifg=#0f0f0f
 
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak nolist
 
@@ -247,3 +263,4 @@ nnoremap ff zz
 highlight Comment guifg=#8E3C0B 
 highlight NonText guifg=#763B09
 
+set report=0
