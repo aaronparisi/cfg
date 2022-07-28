@@ -2,5 +2,11 @@
   "suggest.noselect": false,
   "coc.preferences.formatOnSaveFiletypes": [],
   "coc.preferences.jumpCommand": "edit",
-  "signature.target": "echo"
+  "signature.target": "echo",
+  "html.autoCreateQuotes": false,
+  "html.autoClosingTags": true,
+  "html.format.indentInnerHtml": true,
+  "html.completion.attributeDefaultValue": "empty",
+  "coc.preferences.bracketEnterImprove": true,
+  "coc.preferences.formatOnType": true
 }
