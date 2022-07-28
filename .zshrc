@@ -35,11 +35,12 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$PATH:$HOME/custom-git-commands/
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-export MANPAGER="vim -M +MANPAGER -c 'syntax off' -c 'set foldlevel=9999' -"
+export MANPAGER="vim -M +MANPAGER -c 'syntax off' -c 'set foldlevel=9999' -c 'set number relativenumber' -"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -107,7 +108,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git wd  zshmarks zsh-syntax-highlighting zsh-vi-mode)
+# plugins=(git wd  zshmarks zsh-syntax-highlighting zsh-vi-mode)
+plugins=(git wd zshmarks zsh-syntax-highlighting)
 
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 source $ZSH/oh-my-zsh.sh
@@ -138,10 +140,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ja='exa --grid --classify --all --all --group-directories-first'
-alias jao='exa --oneline --all --all --classify --group-directories-first'
-alias jal='exa --long --all --all'
-alias jat='exa --tree --level=2'
+alias ja='exa --grid --classify --all --all --group-directories-first --color=never'
+alias jao='exa --oneline --all --all --classify --group-directories-first --color=never'
+alias jal='exa --long --all --all --group-directories-first --color=never'
+alias jat='exa --tree --level=2 --color=never'
 
 alias gm="jump"
 alias sm="bookmark"
@@ -160,6 +162,7 @@ declare -a SCOLDS
 SCOLDS=(
 	"rm is a dangerous command."
 	"Read the error message."
+  "Read the docs."
 )
 alias clear='echo ${SCOLDS[ $RANDOM % ${#SCOLDS[@]} + 1 ]}'
 alias c='clear'

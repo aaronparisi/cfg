@@ -46,8 +46,10 @@ let g:vim_matchtag_files = '*.html,*.xml,*.js,*.jsx'
 
 set showtabline=0
 
-highlight StatusLine guifg=#BA4B07 guibg=#0f0f0f
-highlight StatusLineNC guifg=#6c2b0a guibg=#0f0f0f
+" highlight StatusLine guifg=#BA4B07 guibg=#0f0f0f
+highlight StatusLine guifg=#CB460A guibg=#0f0f0f
+" highlight StatusLineNC guifg=#6c2b0a guibg=#0f0f0f
+highlight StatusLineNC guifg=#0f0f0f guibg=#562c0a
 
 set statusline=
 
@@ -62,8 +64,14 @@ let g:currentmode={
       \ 'c' : 'Command',
       \}
 
-set statusline+=\ %{toupper(g:currentmode[mode()])}
-set statusline+=%<%F\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+function StatusLineLeftSpacer()
+  let spacer = repeat(" ", 3)
+  return spacer
+endfunction
+
+" set statusline+=\ %{toupper(g:currentmode[mode()])}
+set statusline+=%{StatusLineLeftSpacer()}
+set statusline+=%<%F\ %h%m%r%=%-14.(%l/%L%)\ 
 set statusline+=%{FugitiveStatusline()}
 
 set tabstop=2
@@ -72,7 +80,9 @@ set shiftwidth=2
 set cindent
 set hidden
 set breakindent
-set backspace=indent
+set breakindentopt=sbr
+set showbreak=>>>
+set backspace=indent,eol
 
 "set wildmenu
 set iskeyword-=_
@@ -81,8 +91,7 @@ hi clear CursorLine
 set cursorlineopt=number
 set cursorline 
 
-highlight LineNr guifg=#763B09
-highlight CursorLineNr guifg=#ff6600 
+highlight CursorLineNr guifg=#562c0a guibg=#0f0f0f
 
 set belloff=all
 "set vb
@@ -91,28 +100,32 @@ set ignorecase
 set foldmethod=indent
 set foldenable
 set foldlevel=0
-hi Folded guifg=#763B09 guibg=#0f0f0f
-highlight foldcolumn guibg=#0f0f0f guifg=#763B09
+hi Folded guifg=#562c0a guibg=#0f0f0f
+highlight foldcolumn guibg=#0f0f0f guifg=#562c0a
 set foldcolumn=1
 set foldminlines=0
-"set fillchars=fold:\
+set fillchars=fold:\ 
 
-set signcolumn=no
-highlight SignColumn guibg=#0f0f0f
+set signcolumn=yes
+highlight SignColumn guibg=#0f0f0f guifg=#ff5500
 function! MyFoldText()
-  const foldindicator = "|"
-  return v:folddashes . v:folddashes . foldindicator
+  const indentChar = " "
+  const indentChars = repeat(indentChar, v:foldlevel)
+  const foldindicator = ""
+  const tailChars = "-----------------------------------------------"
+  return indentChars . indentChars . foldindicator . tailChars
 endfunction
 set foldtext=MyFoldText()
 
-" set foldopen-=search
+" set foldopen=all
+" set foldclose=undo
 
 set matchpairs+=<:>
 
 hi ColorColumn guibg=#321F0D
 
 let mapleader = ","
-nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+" nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 let g:netrw_liststyle = 0
 let g:netrw_banner = 0
@@ -132,6 +145,8 @@ nnoremap : ;
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak nolist
+let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
+set wrapscan
 
 let &t_SI = "\<Esc>]50;CursorShape=2\x7"
 let &t_SR = "\<Esc>]50;CursorShape=1\x7"
@@ -156,6 +171,7 @@ let g:hardtime_default_on=1
 
 set formatoptions-=cro
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType * setlocal syntax=off
 
 set scrolloff=10
 
@@ -167,6 +183,7 @@ autocmd FileType help setlocal number relativenumber
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
+set undofile
 
 set showcmd
 
@@ -219,18 +236,18 @@ set nospell
 
 let @/ = ""
 
-highlight Search guibg=#800080 guifg=#ff6600
+highlight Search guibg=#800080 guifg=#ff5500
 
-highlight Pmenu guibg=#800080 guifg=#ff6600
-highlight PmenuSel guibg=#ff6600 guifg=#0f0f0f
+highlight Pmenu guibg=#800080 guifg=#ff5500
+highlight PmenuSel guibg=#ff5500 guifg=#0f0f0f
 
-highlight Error guibg=#ff6600 guifg=#0f0f0f
+highlight Error guibg=#ff5500 guifg=#0f0f0f
 highlight Warning guibg=#2B1408 
 
 highlight CocInfoFloat guifg=#0f0f0f
 highlight CocWarningHighlight guibg=#907600
 highlight CocHintHighlight guibg=#005E63
-highlight CocUnusedHighlight guibg=#391A08
+highlight CocUnusedHighlight guibg=#0f0f0f
 highlight CocHintSign guifg=#0f0f0f
 
 nnoremap <silent> K :call ShowDocumentation()<CR>
@@ -249,11 +266,9 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
 
-let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
-set wrap linebreak nolist
 
-highlight VertSplit guifg=#800080 guibg=#ff6600
-highlight MatchParen guibg=#800080 guifg=#ff6600
+highlight VertSplit guifg=#800080 guibg=#ff5500
+highlight MatchParen guibg=#800080 guifg=#ff5500
 
 nnoremap z f
 nnoremap Z F
@@ -261,6 +276,36 @@ nnoremap f z
 nnoremap ff zz
 
 highlight Comment guifg=#8E3C0B 
-highlight NonText guifg=#763B09
+highlight NonText guifg=#562c0a
 
 set report=0
+set display+=lastline
+set title
+
+highlight Normal guibg=#0f0f0f
+highlight Directory guifg=#ff5500
+highlight MoreMsg guifg=#ff5500
+highlight Question guifg=#ff5500
+
+function! BuffersList()
+  let all = range(0, bufnr('$'))
+  let res = []
+  for b in all
+    if buflisted(b)
+      call add(res, bufname(b))
+    endif
+  endfor
+  return res
+endfunction
+
+function! BuffersGrep (expression)
+  exec 'vimgrep/'.a:expression.'/ '.join(BuffersList())
+endfunction
+
+command! -nargs=+ BuffGrep call BuffersGrep(<q-args>)
+
+" inoremap <leader><CR> <CR><C-o>==<C-o>O
+highlight LineNr guifg=#562c0a
+
+" set.filter(cur_poll=question.num_pol)
+" ues_list('num_votes', flat=True))
