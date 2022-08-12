@@ -5,7 +5,9 @@ Plug 'Quramy/vim-js-pretty-template'
 Plug 'othree/xml.vim'
 Plug 'tpope/vim-surround' "for surrounding things with parens, etc etc etc
 Plug 'neoclide/coc.nvim' "auto-completion, etc etc etc
-Plug 'ctrlpvim/ctrlp.vim' 
+" Plug 'ctrlpvim/ctrlp.vim' 
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive' "enables git command execution, I use it for blame
 Plug 'leafgarland/typescript-vim'
 Plug 'KabbAmine/vCoolor.vim' "modifying color codes via a color picker
@@ -32,6 +34,9 @@ call plug#end()
 
 syntax off
 set termguicolors
+" set notermguicolors
+" set t_Co=16
+" colorscheme default
 
 set timeoutlen=1000
 set ttimeoutlen=5
@@ -45,11 +50,6 @@ let g:vim_matchtag_enable_by_default = 1
 let g:vim_matchtag_files = '*.html,*.xml,*.js,*.jsx'
 
 set showtabline=0
-
-" highlight StatusLine guifg=#BA4B07 guibg=#0f0f0f
-highlight StatusLine guifg=#CB460A guibg=#0f0f0f
-" highlight StatusLineNC guifg=#6c2b0a guibg=#0f0f0f
-highlight StatusLineNC guifg=#0f0f0f guibg=#562c0a
 
 set statusline=
 
@@ -80,18 +80,23 @@ set shiftwidth=2
 set cindent
 set hidden
 set breakindent
-set breakindentopt=sbr
-set showbreak=>>>
+set breakindentopt=sbr,min:5,shift:1
+
+function! MyShowBreak()
+  " return repeat('  ', v:indentlevel) . "..."
+  return "hiiiiii"
+endfunction
+" set showbreak=myShowBreak()
+let &showbreak='     ...'
 set backspace=indent,eol
 
-"set wildmenu
+set wildmenu
 set iskeyword-=_
 
 hi clear CursorLine
 set cursorlineopt=number
 set cursorline 
 
-highlight CursorLineNr guifg=#562c0a guibg=#0f0f0f
 
 set belloff=all
 "set vb
@@ -100,19 +105,16 @@ set ignorecase
 set foldmethod=indent
 set foldenable
 set foldlevel=0
-hi Folded guifg=#562c0a guibg=#0f0f0f
-highlight foldcolumn guibg=#0f0f0f guifg=#562c0a
 set foldcolumn=1
 set foldminlines=0
-set fillchars=fold:\ 
+set fillchars=fold:\ ,vert:\|
 
-set signcolumn=yes
-highlight SignColumn guibg=#0f0f0f guifg=#ff5500
+set signcolumn=no
 function! MyFoldText()
   const indentChar = " "
   const indentChars = repeat(indentChar, v:foldlevel)
   const foldindicator = ""
-  const tailChars = "-----------------------------------------------"
+  const tailChars = "-->-<--"
   return indentChars . indentChars . foldindicator . tailChars
 endfunction
 set foldtext=MyFoldText()
@@ -122,7 +124,7 @@ set foldtext=MyFoldText()
 
 set matchpairs+=<:>
 
-hi ColorColumn guibg=#321F0D
+hi ColorColumn ctermbg=0 guibg=#230F05
 
 let mapleader = ","
 " nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
@@ -131,7 +133,9 @@ let g:netrw_liststyle = 0
 let g:netrw_banner = 0
 let g:netrw_browse_split = 0
 
-nnoremap <c-p> :CtrlP<CR>
+nnoremap <c-p> :FZF<CR>
+
+" nnoremap <c-p> :CtrlP<CR>
 " this is a comment, feel free to delete if you ever notice me again.  Sigh.
 " ^^ I noticed you on June 28, 2022, and you are beautiful.
 " If I feel guilted to add to this every fucking time I see it I'm gonna be upset - July 1, 2022
@@ -236,19 +240,9 @@ set nospell
 
 let @/ = ""
 
-highlight Search guibg=#800080 guifg=#ff5500
 
-highlight Pmenu guibg=#800080 guifg=#ff5500
-highlight PmenuSel guibg=#ff5500 guifg=#0f0f0f
 
-highlight Error guibg=#ff5500 guifg=#0f0f0f
-highlight Warning guibg=#2B1408 
 
-highlight CocInfoFloat guifg=#0f0f0f
-highlight CocWarningHighlight guibg=#907600
-highlight CocHintHighlight guibg=#005E63
-highlight CocUnusedHighlight guibg=#0f0f0f
-highlight CocHintSign guifg=#0f0f0f
 
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
@@ -267,25 +261,17 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
 
 
-highlight VertSplit guifg=#800080 guibg=#ff5500
-highlight MatchParen guibg=#800080 guifg=#ff5500
 
 nnoremap z f
 nnoremap Z F
 nnoremap f z
 nnoremap ff zz
 
-highlight Comment guifg=#8E3C0B 
-highlight NonText guifg=#562c0a
 
 set report=0
 set display+=lastline
 set title
 
-highlight Normal guibg=#0f0f0f
-highlight Directory guifg=#ff5500
-highlight MoreMsg guifg=#ff5500
-highlight Question guifg=#ff5500
 
 function! BuffersList()
   let all = range(0, bufnr('$'))
@@ -305,7 +291,51 @@ endfunction
 command! -nargs=+ BuffGrep call BuffersGrep(<q-args>)
 
 " inoremap <leader><CR> <CR><C-o>==<C-o>O
-highlight LineNr guifg=#562c0a
 
 " set.filter(cur_poll=question.num_pol)
 " ues_list('num_votes', flat=True))
+
+highlight CocInfoFloat ctermfg=0
+highlight CocWarningHighlight ctermbg=3 guifg=#ff5500
+highlight CocHintHighlight ctermbg=2
+highlight CocUnusedHighlight guibg=#0f0f0f
+highlight CocInfoFloat guifg=#0f0f0f
+
+highlight normal ctermfg=7 guifg=#ff5500 guibg=#0f0f0f
+highlight linenr ctermfg=3 guifg=#ff5500
+highlight cursorlinenr ctermfg=3 guifg=#ff5500
+highlight folded ctermbg=0 ctermfg=3 guibg=#0f0f0f guifg=#ff5500
+highlight foldcolumn ctermbg=0 ctermfg=3 guibg=#0f0f0f guifg=#ff5500
+highlight signcolumn ctermbg=0 ctermfg=3 guibg=#0f0f0f guifg=#ff5500
+highlight statuslinenc ctermbg=0 ctermfg=4 guibg=#ff5500 guifg=#451904
+highlight statusline ctermbg=0 ctermfg=4 guifg=#db4900 guibg=#0f0f0f
+highlight search ctermbg=0 ctermfg=4 guifg=#ff5500 guibg=#50144E
+highlight nontext ctermfg=7 guifg=#ff5500 guibg=#0f0f0f
+highlight visual ctermbg=0 ctermfg=4 guifg=#ff5500 guibg=#50144E
+highlight Pmenu ctermbg=5 ctermfg=7 guibg=#50144E guifg=#ff5500
+highlight PmenuSel ctermbg=7 ctermfg=5 guibg=#ff5500 guifg=#0f0f0f
+highlight VertSplit guifg=#2B0D29 guibg=#ff5500
+highlight MatchParen guibg=#50144E guifg=#ff5500
+
+highlight Directory guifg=#ff5500
+highlight MoreMsg guifg=#ff5500
+highlight Question guifg=#ff5500
+highlight modemsg guifg=#ff5500
+highlight title guifg=#ff5500
+highlight cursorline guibg=#ff5500 guifg=#0f0f0f
+" autocmd WinEnter * if &buftype == 'quickfix' | highlight cursorline guibg=#ff5500 guifg=#0f0f0f | setlocal cursorline | endif
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Normal'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Normal'],
+  \ 'info':    ['fg', 'Normal'],
+  \ 'border':  ['fg', 'Normal'],
+  \ 'prompt':  ['fg', 'Normal'],
+  \ 'pointer': ['fg', 'Normal'],
+  \ 'marker':  ['fg', 'Normal'],
+  \ 'spinner': ['fg', 'Normal'],
+  \ 'header':  ['fg', 'Normal'] }

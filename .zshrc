@@ -110,6 +110,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(git wd  zshmarks zsh-syntax-highlighting zsh-vi-mode)
 plugins=(git wd zshmarks zsh-syntax-highlighting)
+# plugins=(git wd zshmarks)
 
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 source $ZSH/oh-my-zsh.sh
@@ -183,4 +184,6 @@ alias confgit='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
 ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_UNDERLINE
 
+# export LS_COLORS="di=31;41:ln=31;41:so=31;41:pi=31;41:ex=31;41:bd=31;41:cd=31;41:su=31;41:sg=31;41:tw=31;41:ow=31;41:"
+# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 # ignore me
