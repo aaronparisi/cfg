@@ -161,6 +161,7 @@ chpwd_functions=( chpwd_do_ja )
 
 declare -a SCOLDS
 SCOLDS=(
+  "Remember the scream test."
 	"rm is a dangerous command."
 	"Read the error message."
   "Read the docs."

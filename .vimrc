@@ -87,7 +87,7 @@ function! MyShowBreak()
   return "hiiiiii"
 endfunction
 " set showbreak=myShowBreak()
-let &showbreak='     ...'
+let &showbreak='     ... '
 set backspace=indent,eol
 
 set wildmenu
@@ -124,7 +124,6 @@ set foldtext=MyFoldText()
 
 set matchpairs+=<:>
 
-hi ColorColumn ctermbg=0 guibg=#230F05
 
 let mapleader = ","
 " nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
@@ -188,8 +187,6 @@ set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 set undofile
-
-set showcmd
 
 function! GotoJump()
   jumps
@@ -295,43 +292,186 @@ command! -nargs=+ BuffGrep call BuffersGrep(<q-args>)
 " set.filter(cur_poll=question.num_pol)
 " ues_list('num_votes', flat=True))
 
-highlight CocInfoFloat ctermfg=0
-highlight CocWarningHighlight ctermbg=3 guifg=#ff5500
-highlight CocHintHighlight ctermbg=2
-highlight CocUnusedHighlight guibg=#0f0f0f
-highlight CocInfoFloat guifg=#0f0f0f
+" // Color Schemes + Highlighting
+" Black, Orange and Yellow (default)
+let MyBlack = '#0f0602'
+let MyFore = '#ff5500'
+let MyDullFore = '#AB390A'
+let MyDullerFore = '#2E1205'
+let MyDullestFore = '#451904'
+let MySecondary = '#ffb900'
 
-highlight normal ctermfg=7 guifg=#ff5500 guibg=#0f0f0f
-highlight linenr ctermfg=3 guifg=#ff5500
-highlight cursorlinenr ctermfg=3 guifg=#ff5500
-highlight folded ctermbg=0 ctermfg=3 guibg=#0f0f0f guifg=#ff5500
-highlight foldcolumn ctermbg=0 ctermfg=3 guibg=#0f0f0f guifg=#ff5500
-highlight signcolumn ctermbg=0 ctermfg=3 guibg=#0f0f0f guifg=#ff5500
-highlight statuslinenc ctermbg=0 ctermfg=4 guibg=#ff5500 guifg=#451904
-highlight statusline ctermbg=0 ctermfg=4 guifg=#db4900 guibg=#0f0f0f
-highlight search ctermbg=0 ctermfg=4 guifg=#ff5500 guibg=#50144E
-highlight nontext ctermfg=7 guifg=#ff5500 guibg=#0f0f0f
-highlight visual ctermbg=0 ctermfg=4 guifg=#ff5500 guibg=#50144E
-highlight Pmenu ctermbg=5 ctermfg=7 guibg=#50144E guifg=#ff5500
-highlight PmenuSel ctermbg=7 ctermfg=5 guibg=#ff5500 guifg=#0f0f0f
-highlight VertSplit guifg=#2B0D29 guibg=#ff5500
-highlight MatchParen guibg=#50144E guifg=#ff5500
+" lifted
+" let MyBlack = '#000F2A'
+" let MyFore = '#59E3C2'
+" let MyDullFore = '#44AB93'
+" let MyDullerFore = '#2E6F5F'
+" let MyDullestFore = '#204A40'
+" let MySecondary = '#f0bcd4'
 
-highlight Directory guifg=#ff5500
-highlight MoreMsg guifg=#ff5500
-highlight Question guifg=#ff5500
-highlight modemsg guifg=#ff5500
-highlight title guifg=#ff5500
-highlight cursorline guibg=#ff5500 guifg=#0f0f0f
-" autocmd WinEnter * if &buftype == 'quickfix' | highlight cursorline guibg=#ff5500 guifg=#0f0f0f | setlocal cursorline | endif
+" Neon Bogies
+" let MyBlack = '#1b2d2a'
+" let MyFore = '#aaa95a'
+" let MyDullFore = '#76753F'
+" let MyDullerFore = '#4F4E2B'
+" let MyDullestFore = '#3E3D23'
+" let MySecondary = '#ceff1a'
+
+" New England
+" let MyBlack = '#061a40'
+" let MyFore = '#b9d6f2'
+" let MyDullFore = '#b9d6f2'
+" let MyDullerFore = '#b9d6f2'
+" let MyDullestFore = '#b9d6f2'
+" let MySecondary = '#f1ffc4'
+
+" Cantamelon
+" let MyBlack = '#184a45'
+" let MyFore = '#b0b8b4'
+" let MyDullFore = '#858B87'
+" let MyDullerFore = '#656A67'
+" let MyDullestFore = '#434644'
+" let MySecondary = '#fc766a'
+
+" Horse d'oeuvres
+" let MyBlack = '#553d56'
+" let MyFore = '#a4bef3'
+" let MyDullFore = '#a4bef3'
+" let MyDullerFore = '#a4bef3'
+" let MyDullestFore = '#a4bef3'
+" let MySecondary = '#857885'
+
+" Fruits
+" let MyBlack = '#2e2836'
+" let MyFore = '#b6d094'
+" let MyDullFore = '#87996C'
+" let MyDullerFore = '#616E4E'
+" let MyDullestFore = '#3A4130'
+" let MySecondary = '#D65667'
+
+" Drink
+" let MyBlack = '#102e4a'
+" let MyFore = '#a682ff'
+" let MyDullFore = '#a682ff'
+" let MyDullerFore = '#a682ff'
+" let MyDullestFore = '#a682ff'
+" let MySecondary = '#55c1ff'
+
+" Tea Green
+" let MyBlack = '#611c35'
+" let MyFore = '#d7e8ba'
+" let MyDullFore = '#d7e8ba'
+" let MyDullerFore = '#d7e8ba'
+" let MyDullestFore = '#d7e8ba'
+" let MySecondary = '#ffa630'
+
+" Frostberry
+" let MyBlack = '#571032'
+" let MyFore = '#d1f3de'
+" let MyDullFore = '#d1f3de'
+" let MyDullerFore = '#d1f3de'
+" let MyDullestFore = '#d1f3de'
+" let MySecondary = '#b07289'
+
+" Dustbuckle
+" let MyBlack = '#1d3c45'
+" let MyFore = '#fff1e1'
+" let MyDullFore = '#fff1e1'
+" let MyDullerFore = '#fff1e1'
+" let MyDullestFore = '#fff1e1'
+" let MySecondary = '#d2601a'
+
+" Booweeu
+" let MyBlack = '#271F30'
+" let MyFore = '#8dffcd'
+" let MyDullFore = '#8dffcd'
+" let MyDullerFore = '#8dffcd'
+" let MyDullestFore = '#8dffcd'
+" let MySecondary = '#edd83d'
+
+" Raisin Salsa
+" let MyBlack = '#272932'
+" let MyFore = '#0CB0B5'
+" let MyDullFore = '#0CB0B5'
+" let MyDullerFore = '#0CB0B5'
+" let MyDullestFore = '#0CB0B5'
+" let MySecondary = '#f05d5e'
+
+" Reese's
+" let MyBlack = '#350500'
+" let MyFore = '#fa4d06'
+" let MyDullFore = '#BE3A04'
+" let MyDullerFore = '#983007'
+" let MyDullestFore = '#752608'
+" let MySecondary = '#ffef00'
+
+" Black, Orange and Purple
+" let MyBlack = '#0f0602'
+" let MyFore = '#ff5500'
+" let MyDullFore = '#AB390A'
+" let MyDullerFore = '#2E1205'
+" let MyDullestFore = '#451904'
+" let MySecondary = '#A800FF'
+
+" Black, Orange and Purple
+" let MyBlack = '#0f0602'
+" let MyFore = '#ff5500'
+" let MyDullFore = '#AB390A'
+" let MyDullerFore = '#2E1205'
+" let MyDullestFore = '#451904'
+" let MySecondary = '#A800FF'
+
+" Blue, White and Yellow
+" let MyBlack = '#090769'
+" let MyFore = '#B5B5B5'
+" let MyDullFore = '#7B7B7B'
+" let MyDullerFore = '#545454'
+" let MyDullestFore = '#2F2F2F'
+" let MySecondary = '#ffb900'
+
+" execute 'highlight Cursor guibg=' . MyFore . ' guifg=' . MyBlack
+execute 'highlight ColorColumn guibg=' . MyDullestFore
+execute 'highlight CocFloating guifg=' . MyBlack . ' guibg=' . MyFore
+execute 'highlight CocErrorFloat guifg=' . MyBlack . ' guibg=' . MyFore
+execute 'highlight CocWarningFloat guifg=' . MyBlack . ' guibg=' . MyFore
+execute 'highlight CocInfoFloat guifg=' . MyBlack . ' guibg=' . MyFore
+execute 'highlight CocHintFloat guifg=' . MyBlack . ' guibg=' . MyFore
+execute 'highlight CocWarningHighlight guifg=' . MyFore
+execute 'highlight CocUnusedHighlight guibg=' . MyBlack
+execute 'highlight normal guifg=' . MyFore . ' guibg=' . MyBlack
+execute 'highlight linenr guifg=' . MyFore
+execute 'highlight cursorlinenr guifg=' . MyFore
+execute 'highlight folded guibg=' . MyBlack . ' guifg=' . MyFore
+execute 'highlight foldcolumn guibg=' . MyBlack . ' guifg=' . MyFore
+execute 'highlight signcolumn guibg=' . MyBlack . ' guifg=' . MyFore
+execute 'highlight statuslinenc guibg=' . MyFore . ' guifg=' . MyDullestFore
+execute 'highlight statusline guifg=' . MyDullFore . ' guibg=' . MyBlack
+execute 'highlight search guifg=' . MyBlack . ' guibg=' . MySecondary
+execute 'highlight nontext guifg=' . MyFore . ' guibg=' . MyBlack
+execute 'highlight visual guifg=' . MyBlack . ' guibg=' . MySecondary
+execute 'highlight PmenuSel guibg=' . MySecondary . ' guifg=' . MyBlack
+execute 'highlight Pmenu guibg=' . MyFore . ' guifg=' . MyBlack
+execute 'highlight PmenuSbar guibg=' . MyFore . ' guifg=' . MyFore
+execute 'highlight PmenuThumb guibg=' . MySecondary . ' guifg=' . MySecondary
+execute 'highlight VertSplit guifg=' . MyDullestFore . ' guibg=' . MyFore
+execute 'highlight MatchParen guibg=' . MySecondary . ' guifg=' . MyBlack
+execute 'highlight Directory guifg=' . MyFore
+execute 'highlight MoreMsg guifg=' . MyFore
+execute 'highlight ModeMsg guifg=' . MyFore
+execute 'highlight WarningMsg guifg=' . MyFore
+execute 'highlight Question guifg=' . MyFore
+execute 'highlight Title guifg=' . MyFore
+execute 'highlight ErrorMsg guifg=' . MyFore . ' guibg=' . MyBlack
+execute 'highlight cursorline guibg=' . MyFore . ' guifg=' . MyBlack
+" autocmd WinEnter * if &buftype == 'quickfix' | highlight cursorline guibg=#ff5500 guifg=#0f0602 | setlocal cursorline | endif
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Normal'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'hl':      ['bg', 'PmenuSel'],
+  \ 'fg+':     ['bg', 'Normal', 'CursorColumn', 'Normal'],
   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Normal'],
+  \ 'hl+':     ['bg', 'PmenuSel'],
   \ 'info':    ['fg', 'Normal'],
   \ 'border':  ['fg', 'Normal'],
   \ 'prompt':  ['fg', 'Normal'],
@@ -339,3 +479,6 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Normal'],
   \ 'spinner': ['fg', 'Normal'],
   \ 'header':  ['fg', 'Normal'] }
+
+" nnoremap <c-e> 5<c-e>
+" nnoremap <c-y> 5<c-y>
