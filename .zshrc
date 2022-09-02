@@ -108,9 +108,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(git wd  zshmarks zsh-syntax-highlighting zsh-vi-mode)
-plugins=(git wd zshmarks zsh-syntax-highlighting)
-# plugins=(git wd zshmarks)
+plugins=(git wd zshmarks)
 
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 source $ZSH/oh-my-zsh.sh
@@ -141,10 +139,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ja='exa --grid --classify --all --all --group-directories-first --color=never'
-alias jao='exa --oneline --all --all --classify --group-directories-first --color=never'
-alias jal='exa --long --all --all --group-directories-first --color=never'
-alias jat='exa --tree --level=2 --color=never'
+# alias ja='exa --oneline --classify --all --all --group-directories-first --color=never'
+# alias jao='exa --oneline --all --all --classify --group-directories-first --color=never'
+# alias jal='exa --long --all --all --group-directories-first --color=never'
+# alias jat='exa --tree --level=2 --color=never'
+
+# uses homebrew-installed GNU coreutils' ls
+alias ls='gls --group-directories-first -F -a -1'
 
 alias gm="jump"
 alias sm="bookmark"
@@ -154,10 +155,10 @@ alias pm="showmarks"
 alias chrome="open -a 'Google Chrome'"
 alias copypath="pwd|pbcopy"
 
-function chpwd_do_ja () {
-	ja
+function chpwd_do_ls () {
+	ls
 }
-chpwd_functions=( chpwd_do_ja )
+chpwd_functions=( chpwd_do_ls )
 
 declare -a SCOLDS
 SCOLDS=(

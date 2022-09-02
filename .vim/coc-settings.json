@@ -4,9 +4,10 @@
   "coc.preferences.jumpCommand": "edit",
   "signature.target": "echo",
   "html.autoCreateQuotes": false,
-  "html.autoClosingTags": true,
-  "html.format.indentInnerHtml": true,
+  "html.autoClosingTags": false,
+  "html.format.indentInnerHtml": false,
   "html.completion.attributeDefaultValue": "empty",
   "coc.preferences.bracketEnterImprove": true,
-  "coc.preferences.formatOnType": true
+  "coc.preferences.formatOnType": true,
+  "suggest.autoTrigger": "none"
 }
