@@ -1,4 +1,9 @@
 call plug#begin('~/.vim/plugged')
+Plug 'ayu-theme/ayu-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'ericbn/vim-solarized'
+Plug 'haishanh/night-owl.vim'
+" Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-commentary'
 Plug 'takac/vim-hardtime'
 Plug 'Quramy/vim-js-pretty-template'
@@ -33,10 +38,11 @@ Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
 call plug#end()
 
 syntax off
+set background=dark
 set termguicolors
-" set notermguicolors
-" set t_Co=16
-" colorscheme default
+let ayucolor="dark"
+" colorscheme ayu
+colorscheme darkblue
 
 set timeoutlen=1000
 set ttimeoutlen=5
@@ -47,32 +53,36 @@ set laststatus=2
 set ruler
 
 let g:vim_matchtag_enable_by_default = 1
-let g:vim_matchtag_files = '*.html,*.xml,*.js,*.jsx'
+let g:vim_matchtag_files = '*.html,*.xml,*.js,*.jsx,.*.css'
 
 set showtabline=0
 
-set statusline=
+function! LightlineLineinfo() abort
+  if winwidth(0) < 86
+    return ''
+  endif
 
-let g:currentmode={
-      \ 'n' : 'NORMAL ',
-      \ 'v' : 'VISUAL ',
-      \ 'V' : 'V-Line',
-      \ "\<C-V>" : 'V-Block',
-      \ 'i' : 'INSERT ',
-      \ 'R' : 'R ',
-      \ 'Rv' : 'V-Replace',
-      \ 'c' : 'Command',
-      \}
-
-function StatusLineLeftSpacer()
-  let spacer = repeat(" ", 3)
-  return spacer
+  let l:current_line = printf('%-3s', line('.'))
+  let l:max_line = printf('%-3s', line('$'))
+  let l:lineinfo = l:current_line . '/' . l:max_line
+  return l:lineinfo
 endfunction
 
-" set statusline+=\ %{toupper(g:currentmode[mode()])}
-set statusline+=%{StatusLineLeftSpacer()}
-set statusline+=%<%F\ %h%m%r%=%-14.(%l/%L%)\ 
-set statusline+=%{FugitiveStatusline()}
+set noshowmode
+let g:lightline = {
+      \ 'colorscheme': '16color',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \    [ 'readonly', 'filename', 'modified' ] ],
+      \ 'right': [ [ 'lineinfo' ],
+      \            [ 'gitbranch' ],
+      \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead',
+      \   'lineinfo': 'LightlineLineinfo'
+      \ }
+      \ }
 
 set tabstop=2
 set expandtab
@@ -80,14 +90,15 @@ set shiftwidth=2
 set cindent
 set hidden
 set breakindent
-set breakindentopt=sbr,min:5,shift:2
+set breakindentopt=sbr,min:5,shift:8
 
 function! MyShowBreak()
   " return repeat('  ', v:indentlevel) . "..."
   return "hiiiiii"
 endfunction
 " set showbreak=myShowBreak()
-let &showbreak='     ... '
+" let &showbreak='     ... '
+let &showbreak=''
 set backspace=indent,eol
 
 set wildmenu
@@ -96,7 +107,6 @@ set iskeyword-=_
 hi clear CursorLine
 set cursorlineopt=number
 set cursorline 
-
 
 set belloff=all
 " set visualbell
@@ -148,12 +158,13 @@ nnoremap : ;
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak nolist
-let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrapscan
 
 let &t_SI = "\<Esc>]50;CursorShape=2\x7"
 let &t_SR = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+inoremap jfj <Esc>:w<CR>
 
 set timeoutlen=1000
 set ttimeoutlen=5
@@ -174,7 +185,6 @@ let g:hardtime_default_on=1
 
 set formatoptions-=cro
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-autocmd FileType * setlocal syntax=off
 autocmd BufNewFile *.html 0r ~/.vim/templates/html.skel
 
 set scrolloff=5
@@ -204,6 +214,10 @@ function! GotoJump()
 endfunction
 
 command! Goj call GotoJump()
+
+command! Sfun /^function
+command! Scon /^>>>>>
+command! Sdif /^[+-]
 
 "autocmd FileType help nnoremap <buffer> <CR> <C-]>
 "autocmd FileType help nnoremap <buffer> <BS> <C-T>
@@ -237,10 +251,6 @@ command! -nargs=1 FindFile call FindFiles(<q-args>)
 set nospell
 
 let @/ = ""
-
-
-
-
 
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
@@ -295,92 +305,45 @@ command! -nargs=+ BuffGrep call BuffersGrep(<q-args>)
 
 " // Color Schemes + Highlighting
 " Black, Orange and Yellow (default)
-let MyBlack = '#0f0602'
-let MyFore = '#ff5500'
-let MyDullFore = '#AB390A'
-let MyDullerFore = '#2E1205'
-let MyDullestFore = '#451904'
-let MySecondary = '#9B6F85'
-
-" lifted
-let MyBlack = '#000F2A'
-let MyFore = '#50CAAD'
-let MyDullFore = '#44AB93'
-let MyDullerFore = '#2E6F5F'
-let MyDullestFore = '#204A40'
-let MySecondary = '#564E4D'
-
-" Black, Orange and Purple
 " let MyBlack = '#0f0602'
 " let MyFore = '#ff5500'
 " let MyDullFore = '#AB390A'
 " let MyDullerFore = '#2E1205'
 " let MyDullestFore = '#451904'
-" let MySecondary = '#A800FF'
+" let MySecondary = '#9B6F85'
 
-" Blue, White and Yellow
-" let MyBlack = '#090769'
-" let MyFore = '#B5B5B5'
-" let MyDullFore = '#7B7B7B'
-" let MyDullerFore = '#545454'
-" let MyDullestFore = '#2F2F2F'
-" let MySecondary = '#ffb900'
+" lifted
+" let MyBlack = '#000F2A'
+" let MyFore = '#50CAAD'
+" let MyDullFore = '#44AB93'
+" let MyDullerFore = '#2E6F5F'
+" let MyDullestFore = '#204A40'
+" let MySecondary = '#564E4D'
 
-" execute 'highlight Cursor guibg=' . MyFore . ' guifg=' . MyBlack
-execute 'highlight ColorColumn guibg=' . MyDullestFore
-execute 'highlight CocFloating guifg=' . MyBlack . ' guibg=' . MyFore
-execute 'highlight CocErrorFloat guifg=' . MyBlack . ' guibg=' . MyFore
-execute 'highlight CocWarningFloat guifg=' . MyBlack . ' guibg=' . MyFore
-execute 'highlight CocInfoFloat guifg=' . MyBlack . ' guibg=' . MyFore
-execute 'highlight CocHintFloat guifg=' . MyBlack . ' guibg=' . MyFore
-execute 'highlight CocWarningHighlight guifg=' . MyFore
-execute 'highlight CocUnusedHighlight guibg=' . MyBlack
-execute 'highlight normal guifg=' . MyFore . ' guibg=' . MyBlack
-execute 'highlight linenr guifg=' . MyFore
-execute 'highlight cursorlinenr guifg=' . MyFore
-execute 'highlight folded guibg=' . MyBlack . ' guifg=' . MyFore
-execute 'highlight foldcolumn guibg=' . MyBlack . ' guifg=' . MyFore
-execute 'highlight signcolumn guibg=' . MyBlack . ' guifg=' . MyFore
-execute 'highlight statuslinenc guibg=' . MyFore . ' guifg=' . MyDullestFore
-execute 'highlight statusline guifg=' . MyDullFore . ' guibg=' . MyBlack
-execute 'highlight search guifg=' . MyBlack . ' guibg=' . MyFore
-execute 'highlight CurSearch guifg=' . MyBlack . ' guibg=' . MyFore
-execute 'highlight nontext guifg=' . MyFore . ' guibg=' . MyBlack
-execute 'highlight visual guifg=' . MyBlack . ' guibg=' . MyFore
-execute 'highlight PmenuSel guibg=' . MySecondary . ' guifg=' . MyFore
-" execute 'highlight PmenuSel guibg=' . MyBlack . ' guifg=' . MyFore
-execute 'highlight Pmenu guibg=' . MyFore . ' guifg=' . MyBlack
-execute 'highlight PmenuSbar guibg=' . MyBlack . ' guifg=' . MyBlack
-execute 'highlight PmenuThumb guibg=' . MyFore . ' guifg=' . MyFore
-execute 'highlight VertSplit guifg=' . MyDullestFore . ' guibg=' . MyFore
-execute 'highlight MatchParen guibg=' . MyFore . ' guifg=' . MyBlack
-execute 'highlight Directory guifg=' . MyFore
-execute 'highlight MoreMsg guifg=' . MyFore
-execute 'highlight ModeMsg guifg=' . MyFore
-execute 'highlight WarningMsg guifg=' . '#ff5500'
-execute 'highlight Question guifg=' . MyFore
-execute 'highlight Title guifg=' . MyFore
-execute 'highlight ErrorMsg guifg=' . MyFore . ' guibg=' . MyBlack
-execute 'highlight cursorline guibg=' . MyFore . ' guifg=' . MyBlack
-" execute 'highlight QuickFixLine guifg=' . MyBlack . ' guibg=' . MySecondary
-" autocmd WinEnter * if &buftype == 'quickfix' | highlight cursorline guibg=#ff5500 guifg=#0f0602 | setlocal cursorline | endif
+" ayu customizations
+" highlight folded guibg=#111921 guifg=#E6E1CF
+" highlight linenr guifg=#E6E1CF
+" highlight colorcolumn guibg=#243B52
+" highlight CocUnusedHighlight guifg=#E6E1CF
+" highlight MatchParen guibg=#F29718 guifg=#111921
+" highlight CursorLineNr guifg=#F29718
+
+" night-owl
+" highlight folded guibg=#011627 guifg=#d6deeb
+" highlight linenr guifg=#d6deeb 
 
 " NOTE these may need to be adjusted depending on the color scheme (2 vs 3 color schemes)
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'WarningMsg'],
-  \ 'fg+':     ['bg', 'Normal'],
-  \ 'bg+':     ['bg', 'PMenuSel'],
-  \ 'hl+':     ['fg', 'WarningMsg'],
-  \ 'info':    ['fg', 'Normal'],
-  \ 'border':  ['fg', 'Normal'],
-  \ 'prompt':  ['fg', 'Normal'],
-  \ 'pointer': ['fg', 'Normal'],
-  \ 'marker':  ['fg', 'Normal'],
-  \ 'spinner': ['fg', 'Normal'],
-  \ 'header':  ['fg', 'Normal'] }
-
-" nnoremap <c-e> 5<c-e>
-" nnoremap <c-y> 5<c-y>
-
+      \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'CursorLineNr'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'CursorLineNr'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }

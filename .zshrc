@@ -162,10 +162,12 @@ chpwd_functions=( chpwd_do_ls )
 
 declare -a SCOLDS
 SCOLDS=(
+  "Everything is an instruction."
   "Remember the scream test."
 	"rm is a dangerous command."
 	"Read the error message."
   "Read the docs."
+  "Generally, not trying too hard will result in good enough code."
 )
 alias clear='echo ${SCOLDS[ $RANDOM % ${#SCOLDS[@]} + 1 ]}'
 alias c='clear'
