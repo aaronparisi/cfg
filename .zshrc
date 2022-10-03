@@ -37,16 +37,12 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$PATH:$HOME/custom-git-commands/
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
 export MANPAGER="vim -M +MANPAGER -c 'syntax off' -c 'set foldlevel=9999' -c 'set number relativenumber' -"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -111,7 +107,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git wd zshmarks)
 
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -137,7 +132,6 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # alias ja='exa --oneline --classify --all --all --group-directories-first --color=never'
 # alias jao='exa --oneline --all --all --classify --group-directories-first --color=never'
@@ -145,7 +139,7 @@ source $ZSH/oh-my-zsh.sh
 # alias jat='exa --tree --level=2 --color=never'
 
 # uses homebrew-installed GNU coreutils' ls
-alias ls='gls --group-directories-first -F -a -1'
+alias ls='gls --group-directories-first -F -a --color=auto'
 
 alias gm="jump"
 alias sm="bookmark"
