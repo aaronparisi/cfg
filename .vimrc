@@ -60,8 +60,7 @@ set backspace=indent,eol
 let mapleader = ","
 
 set wildmenu
-" set wildoptions=pum
-set wildmode=list
+set wildoptions=pum
 set wildignore=*.swp,*.bak
 set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dll,*.pdb,*.min.*
 set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
@@ -249,6 +248,7 @@ let g:currentmode={
        \}
 
 set statusline=
+" TODO there is a bug here that pops up when I do vim substitutions with confirms?
 set statusline+=\ %{toupper(g:currentmode[mode()])}
 set statusline+=\|
 set statusline+=\ %f
