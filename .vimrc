@@ -79,12 +79,13 @@ set showcmd
 set ignorecase
 set foldmethod=indent
 set foldenable
-set foldlevel=0
+set foldlevel=9999
 set foldcolumn=0
 set foldminlines=0
-set fillchars=fold:\ ,vert:\|
+set fillchars=fold:\ ,vert:\|,diff:-
 
 set signcolumn=no
+set diffopt+=foldcolumn:0
 function! MyFoldText()
   const indentChar = " "
   const indentChars = repeat(indentChar, v:foldlevel)
@@ -288,6 +289,11 @@ execute 'highlight errormsg ctermbg=1 ctermfg=' . MyBlack
 execute 'highlight warningmsg ctermbg=1 ctermfg=' . MyBlack
 execute 'highlight specialkey ctermbg=0 ctermfg=8'
 execute 'highlight nontext ctermbg=0 ctermfg=8'
+execute 'highlight incsearch ctermbg=' . MyBlack . ' ctermfg=' . MyAccent
+execute 'highlight diffadd ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
+execute 'highlight diffchange ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
+execute 'highlight diffdelete ctermbg=' . '1' . ' ctermfg=' . MyBlack
+execute 'highlight difftext ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
 
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
       \ | wincmd p | diffthis
