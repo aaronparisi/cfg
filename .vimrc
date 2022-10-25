@@ -1,25 +1,23 @@
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/vim-gitbranch' "exposes fn I use to put git branch in statusline
-Plug 'morhetz/gruvbox'
-Plug 'ayu-theme/ayu-vim'
-Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary' "to comment lines with gc
 Plug 'takac/vim-hardtime'
 Plug 'othree/xml.vim'
 Plug 'tpope/vim-surround' "for surrounding things with parens, etc etc etc
 Plug 'neoclide/coc.nvim' "auto-completion, etc etc etc
 Plug 'KabbAmine/vCoolor.vim' "modifying color codes via a color picker
 Plug 'tpope/vim-abolish' "enhances substition eg repetition for case sensitivity
-Plug 'ap/vim-css-color' "highlight hex codes with their color
 Plug 'tpope/vim-endwise' "auto-complete if, do, def, etc
-Plug 'styled-components/vim-styled-components'
 Plug 'tpope/vim-vinegar' "provides functionality to enhance the use of netrw
-Plug 'xolox/vim-misc' "I think I installed this so the lua plugin would work?
 Plug 'moll/vim-node'
 Plug 'myhere/vim-nodejs-complete'
 Plug 'grvcoelho/vim-javascript-snippets'
 Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
-Plug 'Quramy/vim-js-pretty-template' " html template string syntax highlighting
 call plug#end()
+
+if executable('rg')
+  set grepprg=rg\ --no-heading\ --vimgrep\ --hidden\ --case-sensitive\ --ignore-vcs\ --glob\ '!.git'\ --glob\ '!node_modules'
+endif
 
 set timeoutlen=1000
 set ttimeoutlen=5
@@ -32,18 +30,6 @@ let g:vim_matchtag_enable_by_default = 1
 let g:vim_matchtag_files = '*.html,*.xml,*.js,*.jsx,.*.css'
 
 set showtabline=0
-
-" function! LightlineLineinfo() abort
-"   if winwidth(0) < 86
-"     return ''
-"   endif
-
-"   let l:current_line = printf('%-3s', line('.'))
-"   let l:max_line = printf('%-3s', line('$'))
-"   let l:lineinfo = l:current_line . '/' . l:max_line
-"   return l:lineinfo
-" endfunction
-
 set noshowmode
 
 set tabstop=2
@@ -64,6 +50,7 @@ set wildoptions=pum
 set wildignore=*.swp,*.bak
 set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dll,*.pdb,*.min.*
 set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
+set wildignore+=*/node_modules/*
 set wildignore+=tags
 set wildignore+=*.tar.*
 
@@ -101,8 +88,6 @@ set matchpairs+=<:>
 let g:netrw_liststyle = 0
 let g:netrw_banner = 0
 let g:netrw_browse_split = 0
-
-" nnoremap <c-p> :FZF<CR>
 
 nnoremap <leader>s :source ~/.vimrc<CR>
 
@@ -162,15 +147,9 @@ autocmd FileType help nnoremap <buffer> <CR> <C-]>
 autocmd FileType help nnoremap <buffer> <BS> <C-T>
 autocmd FileType help nnoremap <buffer> o /'\l\{2,\}'<CR>
 autocmd FileType help nnoremap <buffer> O ?'\l\{2,\}'<CR>
-" autocmd FileType help nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
-" autocmd FileType help nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 
 autocmd FileType help nnoremap <buffer> s /\*\d\+\.\d\+\*<CR>zt:noh<CR>
 autocmd FileType help nnoremap <buffer> S ?\*\d\+\.\d\+\*<CR>zt:noh<CR>
-
-call jspretmpl#register_tag('html', 'html')
-call jspretmpl#register_tag('/*html*/', 'html')
-autocmd FileType javascript JsPreTmpl
 
 function! FindFiles(filename)
   let error_file=tempname()
@@ -232,9 +211,6 @@ command! -nargs=+ BuffGrep call BuffersGrep(<q-args>)
 
 syntax off
 set background=dark
-" set termguicolors
-" let ayucolor="dark"
-" colorscheme ayu
 colorscheme default
 
 let g:currentmode={
@@ -257,9 +233,6 @@ set statusline+=%m%r%h%w%q
 set statusline+=%=
 set statusline+=%{gitbranch#name()}\ 
 set statusline+=\ [%l/%L]\ 
-
-" highlight User1 ctermbg=12 ctermfg=black
-" highlight User2 ctermbg=white ctermfg=black
 
 let MyBlack = 'black'
 let MyWhite = 'white'
