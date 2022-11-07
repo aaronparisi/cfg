@@ -7,7 +7,7 @@
   "html.autoClosingTags": false,
   "html.format.indentInnerHtml": false,
   "html.completion.attributeDefaultValue": "empty",
-  "coc.preferences.bracketEnterImprove": true,
-  "coc.preferences.formatOnType": true,
-  "suggest.autoTrigger": "none"
+  "suggest.autoTrigger": "none",
+  "diagnostic.enableSign": false,
+  "diagnostic.enableMessage": "never"
 }

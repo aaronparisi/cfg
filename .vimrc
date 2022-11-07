@@ -37,10 +37,8 @@ set expandtab
 set shiftwidth=2
 set cindent
 set hidden
-set breakindent
-set breakindentopt=sbr,min:5
+set breakindent showbreak=... 
 
-let &showbreak=''
 set backspace=indent,eol
 
 let mapleader = ","
@@ -64,26 +62,77 @@ set belloff=insertmode,spell
 set visualbell
 set showcmd
 set ignorecase
+
+set fillchars=fold:\ ,vert:\|,diff:-
+
+set signcolumn=no
+set diffopt+=foldcolumn:0
+
 set foldmethod=indent
 set foldenable
 set foldlevel=9999
 set foldcolumn=0
 set foldminlines=0
-set fillchars=fold:\ ,vert:\|,diff:-
+" set foldexpr=GetFold(v:lnum)
+" function! NextNonBlankLine(lnum)
+"     let numlines = line('$')
+"     let current = a:lnum + 1
 
-set signcolumn=no
-set diffopt+=foldcolumn:0
+"     while current <= numlines
+"         if getline(current) =~? '\v\S'
+"             return current
+"         endif
+
+"         let current += 1
+"     endwhile
+
+"     return -2
+" endfunction
+" function! PrevNonBlankLine(lnum)
+"   let current = a:lnum - 1
+
+"   while current >= 0
+"     if getline(current) =~? '\v\S'
+"       return current
+"     endif
+
+"     let current -= 1
+"   endwhile
+
+"   return -2
+" endfunction
+" function! IndentLevel(lnum)
+"     return indent(a:lnum) / &shiftwidth
+" endfunction
+" function! GetFold(lnum)
+"   if getline(a:lnum) =~? '\v^\s*$'
+"     return '-1'
+"   endif
+
+"   let prev_indent = IndentLevel(PrevNonBlankLine(a:lnum))
+"   let this_indent = IndentLevel(a:lnum)
+"   let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
+
+"   if this_indent < prev_indent
+"     return prev_indent
+"   elseif next_indent == this_indent
+"     return this_indent
+"   elseif next_indent < this_indent
+"     return this_indent
+"   elseif next_indent > this_indent
+"     return '>' . next_indent
+"   endif
+" endfunction
+" function! MyFoldText()
+"   let ret = getline(v:foldstart) . " --><--"
+"   return ret
+" endfunction
 function! MyFoldText()
-  const indentChar = " "
-  const indentChars = repeat(indentChar, v:foldlevel)
-  const foldindicator = ""
-  const tailChars = "-->-<--"
-  return indentChars . indentChars . foldindicator . tailChars
+  return repeat(" ", (v:foldlevel - 0) * &shiftwidth) . "--"
 endfunction
 set foldtext=MyFoldText()
 
 set matchpairs+=<:>
-
 
 let g:netrw_liststyle = 0
 let g:netrw_banner = 0
@@ -100,6 +149,7 @@ set wrapscan
 
 let &t_SI = "\<Esc>]50;CursorShape=2\x7"
 let &t_SR = "\<Esc>]50;CursorShape=1\x7"
+let &t_SV = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 inoremap jfj <Esc>:w<CR>
@@ -117,8 +167,8 @@ autocmd BufNewFile *.html 0r ~/.vim/templates/html.skel
 
 set scrolloff=5
 
-set hlsearch
-set incsearch
+set nohlsearch
+set noincsearch
 
 autocmd FileType help setlocal number relativenumber
 
@@ -226,13 +276,15 @@ let g:currentmode={
 
 set statusline=
 " TODO there is a bug here that pops up when I do vim substitutions with confirms?
-set statusline+=\ %{toupper(g:currentmode[mode()])}
-set statusline+=\|
+" set statusline+=\ %{toupper(g:currentmode[mode()])}
+" set statusline+=\|
 set statusline+=\ %f
 set statusline+=%m%r%h%w%q
 set statusline+=%=
 set statusline+=%{gitbranch#name()}\ 
 set statusline+=\ [%l/%L]\ 
+
+" set colorcolumn=100
 
 let MyBlack = 'black'
 let MyWhite = 'white'
@@ -261,12 +313,14 @@ execute 'highlight cochintfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight errormsg ctermbg=1 ctermfg=' . MyBlack
 execute 'highlight warningmsg ctermbg=1 ctermfg=' . MyBlack
 execute 'highlight specialkey ctermbg=0 ctermfg=8'
-execute 'highlight nontext ctermbg=0 ctermfg=8'
+execute 'highlight nontext ctermbg=0 ctermfg=' . MyWhite
 execute 'highlight incsearch ctermbg=' . MyBlack . ' ctermfg=' . MyAccent
 execute 'highlight diffadd ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight diffchange ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
 execute 'highlight diffdelete ctermbg=' . '1' . ' ctermfg=' . MyBlack
 execute 'highlight difftext ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
+execute 'highlight colorcolumn ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
+execute 'highlight foldcolumn ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
       \ | wincmd p | diffthis
