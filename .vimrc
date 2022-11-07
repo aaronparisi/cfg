@@ -73,60 +73,6 @@ set foldenable
 set foldlevel=9999
 set foldcolumn=0
 set foldminlines=0
-" set foldexpr=GetFold(v:lnum)
-" function! NextNonBlankLine(lnum)
-"     let numlines = line('$')
-"     let current = a:lnum + 1
-
-"     while current <= numlines
-"         if getline(current) =~? '\v\S'
-"             return current
-"         endif
-
-"         let current += 1
-"     endwhile
-
-"     return -2
-" endfunction
-" function! PrevNonBlankLine(lnum)
-"   let current = a:lnum - 1
-
-"   while current >= 0
-"     if getline(current) =~? '\v\S'
-"       return current
-"     endif
-
-"     let current -= 1
-"   endwhile
-
-"   return -2
-" endfunction
-" function! IndentLevel(lnum)
-"     return indent(a:lnum) / &shiftwidth
-" endfunction
-" function! GetFold(lnum)
-"   if getline(a:lnum) =~? '\v^\s*$'
-"     return '-1'
-"   endif
-
-"   let prev_indent = IndentLevel(PrevNonBlankLine(a:lnum))
-"   let this_indent = IndentLevel(a:lnum)
-"   let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
-
-"   if this_indent < prev_indent
-"     return prev_indent
-"   elseif next_indent == this_indent
-"     return this_indent
-"   elseif next_indent < this_indent
-"     return this_indent
-"   elseif next_indent > this_indent
-"     return '>' . next_indent
-"   endif
-" endfunction
-" function! MyFoldText()
-"   let ret = getline(v:foldstart) . " --><--"
-"   return ret
-" endfunction
 function! MyFoldText()
   return repeat(" ", (v:foldlevel - 0) * &shiftwidth) . "--"
 endfunction
@@ -147,9 +93,8 @@ let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak
 set wrapscan
 
-let &t_SI = "\<Esc>]50;CursorShape=2\x7"
-let &t_SR = "\<Esc>]50;CursorShape=1\x7"
-let &t_SV = "\<Esc>]50;CursorShape=1\x7"
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 inoremap jfj <Esc>:w<CR>
@@ -240,7 +185,6 @@ nnoremap ff zz
 
 set report=0
 set display+=lastline
-set title
 
 function! BuffersList()
   let all = range(0, bufnr('$'))
@@ -263,28 +207,12 @@ syntax off
 set background=dark
 colorscheme default
 
-let g:currentmode={
-       \ 'n'  : 'NORMAL ',
-       \ 'v'  : 'VISUAL ',
-       \ 'V'  : 'V·Line ',
-       \ "\<C-V>" : 'V·Block ',
-       \ 'i'  : 'INSERT ',
-       \ 'R'  : 'R ',
-       \ 'Rv' : 'V·Replace ',
-       \ 'c'  : 'Command ',
-       \}
-
 set statusline=
-" TODO there is a bug here that pops up when I do vim substitutions with confirms?
-" set statusline+=\ %{toupper(g:currentmode[mode()])}
-" set statusline+=\|
 set statusline+=\ %f
 set statusline+=%m%r%h%w%q
 set statusline+=%=
 set statusline+=%{gitbranch#name()}\ 
 set statusline+=\ [%l/%L]\ 
-
-" set colorcolumn=100
 
 let MyBlack = 'black'
 let MyWhite = 'white'
@@ -324,5 +252,3 @@ execute 'highlight foldcolumn ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
       \ | wincmd p | diffthis
-
-set nocdh
