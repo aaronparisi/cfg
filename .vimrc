@@ -37,7 +37,8 @@ set expandtab
 set shiftwidth=2
 set cindent
 set hidden
-set breakindent showbreak=... 
+set breakindent showbreak=>>\ 
+set breakindentopt=shift:-1
 
 set backspace=indent,eol
 
@@ -68,13 +69,64 @@ set fillchars=fold:\ ,vert:\|,diff:-
 set signcolumn=no
 set diffopt+=foldcolumn:0
 
-set foldmethod=indent
+set foldmethod=expr
+set foldexpr=GetFoldLevel(v:lnum)
 set foldenable
-set foldlevel=9999
-set foldcolumn=0
+set foldlevel=0
+set foldcolumn=1
 set foldminlines=0
+function! GetIndentLevel(lnum)
+  return indent(a:lnum) / &shiftwidth
+endfunction
+function! PrevNonBlankLine(lnum)
+  let current = a:lnum - 1
+
+  while current > 0
+    if getline(current) =~? '\v\S'
+      return current
+    endif
+
+    let current -= 1
+  endwhile
+
+  return -2
+endfunction
+function! NextNonBlankLine(lnum)
+  let numlines = line('$')
+  let current = a:lnum + 1
+
+  while current <= numlines
+    if getline(current) =~? '\v\S'
+      return current
+    endif
+
+    let current += 1
+  endwhile
+
+  return -2
+endfunction
+function! GetFoldLevel(lnum)
+  if getline(a:lnum) =~? '\v^\s*$'
+    return '-1'
+  endif
+
+  let prev_indent = GetIndentLevel(PrevNonBlankLine(a:lnum))
+  let this_indent = GetIndentLevel(a:lnum)
+  let next_indent = GetIndentLevel(NextNonBlankLine(a:lnum))
+
+  if this_indent < prev_indent
+    return this_indent + 1
+  elseif next_indent == this_indent
+    return this_indent
+  elseif next_indent < this_indent
+    return this_indent
+  elseif next_indent > this_indent
+    return '>' . next_indent
+  endif
+endfunction
 function! MyFoldText()
-  return repeat(" ", (v:foldlevel - 0) * &shiftwidth) . "--"
+  " return repeat(" ", (v:foldlevel - 0) * &shiftwidth) . "--"
+  return getline(v:foldstart) . " ..."
 endfunction
 set foldtext=MyFoldText()
 
