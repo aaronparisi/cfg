@@ -125,8 +125,7 @@ function! GetFoldLevel(lnum)
   endif
 endfunction
 function! MyFoldText()
-  " return repeat(" ", (v:foldlevel - 0) * &shiftwidth) . "--"
-  return getline(v:foldstart) . " ..."
+  return getline(v:foldstart) . " --><--"
 endfunction
 set foldtext=MyFoldText()
 
