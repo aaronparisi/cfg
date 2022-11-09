@@ -37,8 +37,7 @@ set expandtab
 set shiftwidth=2
 set cindent
 set hidden
-set breakindent showbreak=>>\ 
-set breakindentopt=shift:-1
+set breakindent showbreak=>>>\ 
 
 set backspace=indent,eol
 
@@ -64,10 +63,10 @@ set visualbell
 set showcmd
 set ignorecase
 
-set fillchars=fold:\ ,vert:\|,diff:-
+set fillchars=foldopen:-,foldclose:+,foldsep:\|,fold:\ ,vert:\|,diff:-
 
 set signcolumn=no
-set diffopt+=foldcolumn:0
+set diffopt+=foldcolumn:1
 
 set foldmethod=expr
 set foldexpr=GetFoldLevel(v:lnum)
@@ -105,27 +104,29 @@ function! NextNonBlankLine(lnum)
 
   return -2
 endfunction
+" question is: how do we differentiate between a "line with a lower indent than the previous non-blank-line that _closes_ the preceding fold", and a "line with a lower indent than the previous non-blank-line that _should start_ the subsequent fold (or not fold at all.......)"
 function! GetFoldLevel(lnum)
-  if getline(a:lnum) =~? '\v^\s*$'
-    return '-1'
-  endif
-
   let prev_indent = GetIndentLevel(PrevNonBlankLine(a:lnum))
   let this_indent = GetIndentLevel(a:lnum)
   let next_indent = GetIndentLevel(NextNonBlankLine(a:lnum))
 
-  if this_indent < prev_indent
+  if getline(a:lnum) =~? '\v^\s*$'
+    if prev_indent == 0 || next_indent == 0
+      return '0'
+    endif
+    return '-1'
+  endif
+
+  if this_indent < prev_indent && this_indent >= next_indent
     return this_indent + 1
-  elseif next_indent == this_indent
+  elseif this_indent == next_indent || this_indent > next_indent
     return this_indent
-  elseif next_indent < this_indent
-    return this_indent
-  elseif next_indent > this_indent
+  elseif this_indent < next_indent
     return '>' . next_indent
   endif
 endfunction
 function! MyFoldText()
-  return getline(v:foldstart) . " --><--"
+  return getline(v:foldstart) . " ..."
 endfunction
 set foldtext=MyFoldText()
 
