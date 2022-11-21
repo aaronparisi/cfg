@@ -37,7 +37,7 @@ set expandtab
 set shiftwidth=2
 set cindent
 set hidden
-set breakindent showbreak=>>>\ 
+set breakindent showbreak=...
 
 set backspace=indent,eol
 
@@ -53,6 +53,7 @@ set wildignore+=tags
 set wildignore+=*.tar.*
 
 set iskeyword-=_
+set iskeyword-=-
 
 hi clear CursorLine
 set cursorlineopt=number
@@ -66,13 +67,13 @@ set ignorecase
 set fillchars=foldopen:-,foldclose:+,foldsep:\|,fold:\ ,vert:\|,diff:-
 
 set signcolumn=no
-set diffopt+=foldcolumn:1
+set diffopt+=foldcolumn:0
 
 set foldmethod=expr
 set foldexpr=GetFoldLevel(v:lnum)
 set foldenable
 set foldlevel=0
-set foldcolumn=1
+set foldcolumn=0
 set foldminlines=0
 function! GetIndentLevel(lnum)
   return indent(a:lnum) / &shiftwidth
@@ -104,7 +105,6 @@ function! NextNonBlankLine(lnum)
 
   return -2
 endfunction
-" question is: how do we differentiate between a "line with a lower indent than the previous non-blank-line that _closes_ the preceding fold", and a "line with a lower indent than the previous non-blank-line that _should start_ the subsequent fold (or not fold at all.......)"
 function! GetFoldLevel(lnum)
   let prev_indent = GetIndentLevel(PrevNonBlankLine(a:lnum))
   let this_indent = GetIndentLevel(a:lnum)
@@ -126,7 +126,12 @@ function! GetFoldLevel(lnum)
   endif
 endfunction
 function! MyFoldText()
-  return getline(v:foldstart) . " ..."
+  let ftext = " --><-- "
+  let endtext = trim(getline(v:foldend))
+  if strchars(endtext) > 20
+    let endtext = slice(endtext, 0, 20) . "~"
+  endif
+  return getline(v:foldstart) . ftext
 endfunction
 set foldtext=MyFoldText()
 
@@ -154,18 +159,21 @@ inoremap jfj <Esc>:w<CR>
 let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
-let g:list_of_disabled_keys = []
-let g:hardtime_timeout = 250
+let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:hardtime_timeout = 1000
 let g:hardtime_default_on=1
+let g:hardtime_ignore_quickfix=1
+let g:hardtime_maxcount = 2
 
 set formatoptions-=cro
+set formatoptions+=j
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 autocmd BufNewFile *.html 0r ~/.vim/templates/html.skel
 
-set scrolloff=5
+set scrolloff=2
 
-set nohlsearch
-set noincsearch
+set hlsearch
+set incsearch
 
 autocmd FileType help setlocal number relativenumber
 
@@ -234,6 +242,8 @@ nnoremap z f
 nnoremap Z F
 nnoremap f z
 nnoremap ff zz
+nnoremap [f [z
+nnoremap ]f ]z
 
 set report=0
 set display+=lastline
@@ -273,7 +283,8 @@ let MyAccent = 'yellow'
 execute 'highlight normal ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight folded ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight cursorlinenr ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=underline'
-execute 'highlight cursorline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=none'
+execute 'highlight quickfixline ctermbg=' . MyWhite . ' ctermfg=' . MyBlack . ' cterm=none'
+execute 'highlight cursorline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=underline'
 execute 'highlight linenr ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight cursearch ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
 execute 'highlight search ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
@@ -284,7 +295,7 @@ execute 'highlight vertsplit ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight endofbuffer ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight cocunusedhighlight ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight matchparen ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight statusline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
+execute 'highlight statusline ctermbg=' . MyBlack . ' ctermfg=7'
 execute 'highlight statuslinenc ctermbg=' . MyBlack . ' ctermfg=8'
 execute 'highlight cocerrorfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cocwarningfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
@@ -304,3 +315,5 @@ execute 'highlight foldcolumn ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
       \ | wincmd p | diffthis
+autocmd FilterWritePre * if &diff | setlocal wrap | endif
+autocmd VimEnter * if &diff | execute 'windo set wrap' | endif

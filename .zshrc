@@ -1,38 +1,10 @@
 printf '\n%.0s' {1..100}
-#
-# numterms=$(~/numterms.sh)
-# prevnumterms=$(cat ./prevnumterms.txt)
-# 
-# # if (( $numterms > prevnumterms )); then
-# if (( false )); then
-# 	# get nyt headlines and print links for them
-# 	nyt_response=$(curl "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=TCFjpTQnj7jzvmtelNVLTvRbQZAnqWnH")
-# 	jq -r '.results[] | "\u001b]8;;\(.url)\u0007\(.title)\u001b]8;;\u0007"' <<<"$nyt_response"
-# 
-# 	echo
-# 	echo
-# 
-# 	# print out local weather
-# 	curl wttr.in
-# else
-# 	ps aux
-# fi
-
-# echo $numterms > ~/prevnumterms.txt
-
-#TRAPEXIT() {
-#	echo "inside TRAPEXIT"
-#	sleep 1
-#	echo $( ~/numterms.sh ) > ~/prevnumterms.txt
-#}
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$PATH:$HOME/custom-git-commands/
 
 export MANPAGER="vim -M +MANPAGER -c 'syntax off' -c 'set foldlevel=9999' -c 'set number relativenumber' -"
-
-plugins=(git wd zshmarks)
 
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 
@@ -64,14 +36,6 @@ setopt hist_find_no_dups
 # uses homebrew-installed GNU coreutils' ls
 alias ls='gls --group-directories-first -F -a --color=never'
 
-alias gm="jump"
-alias sm="bookmark"
-alias dm="deletemark"
-alias pm="showmarks"
-
-alias chrome="open -a 'Google Chrome'"
-alias copypath="pwd|pbcopy"
-
 alias python="python3"
 
 function chpwd_do_ls () {
@@ -101,43 +65,66 @@ alias ..='cd ..'
 
 alias confgit='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-alias ga='git add .'
+alias ga='git add'
+alias gad='git add .'
 alias gcm='git commit -m'
-alias grao='git remote add origin'
-alias gp='git push'
+alias gra='git remote add'
+alias gpu='git push'
+alias gbr='git branch'
 alias gst='git status'
-alias gpuo='git push --set-upstream origin'
+alias gsl='git stash list'
+alias gsd='git stash drop'
+alias gps='git push --set-upstream' 
 alias glo='git log --oneline'
 alias gvl='git vlog'
 alias gvd='git vdiff'
+alias gdt='git difftool'
 alias grb='git rebase'
 alias gcb='git checkout -b'
 alias gco='git checkout'
 
-precmd() { print "" }
-
 autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
+precmd() { vcs_info }
 
-# RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '(%b)'
 zstyle ':vcs_info:*' enable git
 
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr ' *'
 zstyle ':vcs_info:*' stagedstr ' +'
-zstyle ':vcs_info:git:*' formats       '(%b%u%c)'
+zstyle ':vcs_info:git:*' formats       '(%b%u%c%m)'
 zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
-PROMPT=$'%F{white}\u256d %n@%m %f%F{green}%~%f %F{blue}${vcs_info_msg_0_}%f
-%F{white}\u2570 %f%F{white}%# %f'
++vi-git-untracked() {
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+     git status --porcelain | grep -m 1 '^??' &>/dev/null
+  then
+    hook_com[misc]=' ?'
+  fi
+}
+
+setopt prompt_subst
+PROMPT=$'
+%F{white}\u256d %~ ${vcs_info_msg_0_}
+\u2570 %# %f'
+
+# function git_branch_name() {
+#   branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
+#   if [[ $branch == "" ]];
+#   then
+#     :
+#   else
+#     echo '('$branch')'
+#   fi
+# }
+# PROMPT=$'
+# %F{white}\u256d %~ $(git_branch_name)
+# \u2570 %# %f'
 
 setopt auto_cd
 
-autoload -U compinit && compinit
-# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+autoload -U compinit; compinit
 
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
