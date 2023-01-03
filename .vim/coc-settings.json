@@ -1,5 +1,4 @@
 {
-  "suggest.noselect": false,
   "coc.preferences.formatOnSaveFiletypes": [],
   "coc.preferences.jumpCommand": "edit",
   "signature.target": "echo",
@@ -8,6 +7,10 @@
   "html.format.indentInnerHtml": false,
   "html.completion.attributeDefaultValue": "empty",
   "suggest.autoTrigger": "none",
+  "suggest.noselect": false,
+  "diagnostic.highlighLimit": 0,
   "diagnostic.enableSign": false,
-  "diagnostic.enableMessage": "never"
+  "diagnostic.enableMessage": "never",
+  "diagnostic.messageTarget" : "echo",
+  "hover.target": "echo"
 }

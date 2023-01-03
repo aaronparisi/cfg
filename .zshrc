@@ -1,4 +1,4 @@
-printf '\n%.0s' {1..100}
+# printf '\n%.0s' {1..100}
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -69,12 +69,15 @@ alias ga='git add'
 alias gad='git add .'
 alias gcm='git commit -m'
 alias gra='git remote add'
-alias gpu='git push'
+alias gps='git push'
+alias gpf='git push --force'
 alias gbr='git branch'
-alias gst='git status'
+alias gus='git status'
+alias gsm='git stash push --message'
 alias gsl='git stash list'
 alias gsd='git stash drop'
-alias gps='git push --set-upstream' 
+alias gpu='git push --set-upstream' 
+alias gpl='git pull'
 alias glo='git log --oneline'
 alias gvl='git vlog'
 alias gvd='git vdiff'
@@ -83,44 +86,51 @@ alias grb='git rebase'
 alias gcb='git checkout -b'
 alias gco='git checkout'
 
-autoload -Uz vcs_info
-precmd() { vcs_info }
+# autoload -Uz vcs_info
+# precmd() { vcs_info }
 
-zstyle ':vcs_info:git:*' formats '(%b)'
-zstyle ':vcs_info:*' enable git
+# zstyle ':vcs_info:git:*' formats '(%b)'
+# zstyle ':vcs_info:*' enable git
 
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' unstagedstr ' *'
-zstyle ':vcs_info:*' stagedstr ' +'
-zstyle ':vcs_info:git:*' formats       '(%b%u%c%m)'
-zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
-zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
+# zstyle ':vcs_info:*' check-for-changes true
+# zstyle ':vcs_info:*' unstagedstr ' *'
+# zstyle ':vcs_info:*' stagedstr ' +'
+# zstyle ':vcs_info:git:*' formats       '(%b%u%c%m)'
+# zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
+# zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
-+vi-git-untracked() {
-  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
-     git status --porcelain | grep -m 1 '^??' &>/dev/null
-  then
-    hook_com[misc]=' ?'
-  fi
-}
-
-setopt prompt_subst
-PROMPT=$'
-%F{white}\u256d %~ ${vcs_info_msg_0_}
-\u2570 %# %f'
-
-# function git_branch_name() {
-#   branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
-#   if [[ $branch == "" ]];
+# +vi-git-untracked() {
+#   if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+#      git status --porcelain | grep -m 1 '^??' &>/dev/null
 #   then
-#     :
-#   else
-#     echo '('$branch')'
+#     hook_com[misc]=' ?'
 #   fi
 # }
+
+# setopt prompt_subst
 # PROMPT=$'
-# %F{white}\u256d %~ $(git_branch_name)
+# %F{white}\u256d %~ ${vcs_info_msg_0_}
 # \u2570 %# %f'
+
+# setopt prompt_subst
+# PROMPT=$'
+# %F{white}\u256d %~
+# \u2570 %# %f'
+
+function git_branch_name() {
+  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
+  if [[ $branch == "" ]];
+  then
+    :
+  else
+    echo '('$branch')'
+  fi
+}
+setopt prompt_subst
+
+PROMPT=$'
+%F{white}\u256d %~ $(git_branch_name)
+\u2570 %# %f'
 
 setopt auto_cd
 

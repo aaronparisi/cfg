@@ -7,12 +7,12 @@ Plug 'tpope/vim-surround' "for surrounding things with parens, etc etc etc
 Plug 'neoclide/coc.nvim' "auto-completion, etc etc etc
 Plug 'KabbAmine/vCoolor.vim' "modifying color codes via a color picker
 Plug 'tpope/vim-abolish' "enhances substition eg repetition for case sensitivity
-Plug 'tpope/vim-endwise' "auto-complete if, do, def, etc
+" Plug 'tpope/vim-endwise' "auto-complete if, do, def, etc
 Plug 'tpope/vim-vinegar' "provides functionality to enhance the use of netrw
 Plug 'moll/vim-node'
 Plug 'myhere/vim-nodejs-complete'
 Plug 'grvcoelho/vim-javascript-snippets'
-Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
+" Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
 call plug#end()
 
 if executable('rg')
@@ -44,7 +44,7 @@ set backspace=indent,eol
 let mapleader = ","
 
 set wildmenu
-set wildoptions=pum
+set wildmode=longest:list,list
 set wildignore=*.swp,*.bak
 set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dll,*.pdb,*.min.*
 set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
@@ -65,6 +65,7 @@ set showcmd
 set ignorecase
 
 set fillchars=foldopen:-,foldclose:+,foldsep:\|,fold:\ ,vert:\|,diff:-
+set foldopen-=hor
 
 set signcolumn=no
 set diffopt+=foldcolumn:0
@@ -126,7 +127,7 @@ function! GetFoldLevel(lnum)
   endif
 endfunction
 function! MyFoldText()
-  let ftext = " --><-- "
+  let ftext = " |-----><-----|"
   let endtext = trim(getline(v:foldend))
   if strchars(endtext) > 20
     let endtext = slice(endtext, 0, 20) . "~"
@@ -145,10 +146,12 @@ nnoremap <leader>s :source ~/.vimrc<CR>
 
 nnoremap ; :
 nnoremap : ;
+" nnoremap n nzz
+" nnoremap N Nzz
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak
-set wrapscan
+set nowrapscan
 
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
@@ -220,22 +223,6 @@ set nospell
 
 let @/ = ""
 
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-
 inoremap <silent><expr> <C-k> coc#refresh()
 
 nnoremap z f
@@ -277,7 +264,7 @@ set statusline+=%{gitbranch#name()}\
 set statusline+=\ [%l/%L]\ 
 
 let MyBlack = 'black'
-let MyWhite = 'white'
+let MyWhite = '7'
 let MyAccent = 'yellow'
 
 execute 'highlight normal ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
@@ -295,8 +282,8 @@ execute 'highlight vertsplit ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight endofbuffer ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight cocunusedhighlight ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight matchparen ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight statusline ctermbg=' . MyBlack . ' ctermfg=7'
-execute 'highlight statuslinenc ctermbg=' . MyBlack . ' ctermfg=8'
+execute 'highlight statusline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
+execute 'highlight statuslinenc ctermbg=' . MyBlack . ' ctermfg=15'
 execute 'highlight cocerrorfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cocwarningfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cocinfofloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
@@ -312,6 +299,62 @@ execute 'highlight diffdelete ctermbg=' . '1' . ' ctermfg=' . MyBlack
 execute 'highlight difftext ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
 execute 'highlight colorcolumn ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight foldcolumn ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
+
+function! IsDir(ent)
+  return a:ent[strchars(a:ent)-1] == '/'
+endfunction
+function! SortVarLengths(ent1, ent2)
+  let len1 = strchars(a:ent1)
+  let len2 = strchars(a:ent2)
+  let endIdx = len1 - 1
+  if len2 < len1
+    let endIdx = len2 - 1
+  endif
+  let curIdx = 0
+  while curIdx < endIdx
+    if a:ent1[curIdx] < a:ent2[curIdx]
+      return -1
+      break
+    elseif a:ent1[curIdx] > a:ent2[curIdx]
+      return 1
+      break
+    endif
+    let curIdx += 1
+  endwhile
+
+  return strchars(a:ent1) < strchars(a:ent2) ? -1 : 1
+endfunction
+function! MySortDirEnts(ent1, ent2)
+  if IsDir(a:ent1) && !IsDir(a:ent2)
+    return -1
+  elseif IsDir(a:ent2) && !IsDir(a:ent1)
+    return 1
+  elseif IsDir(a:ent1) && IsDir(a:ent2)
+    return SortVarLengths(a:ent1, a:ent2)
+  endif
+
+  let ext1 = split(a:ent1, '\.')[1]
+  let ext2 = split(a:ent2, '\.')[1]
+  if ext1 == "html"
+    return -1
+  else
+    return 1
+  endif
+  " if ext1 < ext2
+  "   return -1
+  " elseif ext1 > ext2
+  "   return 1
+  " endif
+
+  " return SortVarLengths(a:ent1, a:ent2)
+endfunction
+function! MyListDirEnts(A, C, P)
+  " return join(sort(getcompletion(a:A, 'file'), 'MySortDirEnts'), "\n")
+  " return join(reverse(getcompletion(a:A, 'file')), "\n")
+  return join(getcompletion(a:A, 'file'), "\n")
+endfunction
+command -complete=custom,MyListDirEnts -nargs=1 Medit edit <args>
+" command -complete=file -nargs=1 Medit edit <args>
 
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
       \ | wincmd p | diffthis
