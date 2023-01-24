@@ -118,7 +118,17 @@ function! GetFoldLevel(lnum)
     return '-1'
   endif
 
-  if this_indent < prev_indent && this_indent >= next_indent
+  if this_indent < prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*}.*$')
+    return this_indent + 1
+  elseif this_indent < prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*\</.*$')
+    return this_indent + 1
+  elseif this_indent < prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*endfunction.*$')
+    return this_indent + 1
+  elseif this_indent < prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*`.*$')
+    return this_indent + 1
+  elseif this_indent < prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*\).*$')
+    return this_indent + 1
+  elseif this_indent < prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*\].*$')
     return this_indent + 1
   elseif this_indent == next_indent || this_indent > next_indent
     return this_indent
