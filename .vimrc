@@ -283,7 +283,7 @@ execute 'highlight cursorlinenr ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' 
 execute 'highlight quickfixline ctermbg=' . MyWhite . ' ctermfg=' . MyBlack . ' cterm=none'
 execute 'highlight cursorline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=underline'
 execute 'highlight linenr ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
-execute 'highlight cursearch ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
+execute 'highlight cursearch ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight search ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight pmenu ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight pmenusel ctermbg=' . MyAccent.  ' ctermfg=' . MyBlack
@@ -302,7 +302,7 @@ execute 'highlight errormsg ctermbg=1 ctermfg=' . MyBlack
 execute 'highlight warningmsg ctermbg=1 ctermfg=' . MyBlack
 execute 'highlight specialkey ctermbg=0 ctermfg=8'
 execute 'highlight nontext ctermbg=0 ctermfg=' . MyWhite
-execute 'highlight incsearch ctermbg=' . MyBlack . ' ctermfg=' . MyAccent
+execute 'highlight incsearch ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight diffadd ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight diffchange ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
 execute 'highlight diffdelete ctermbg=' . '1' . ' ctermfg=' . MyBlack
