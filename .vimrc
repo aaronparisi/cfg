@@ -2,7 +2,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'itchyny/vim-gitbranch' "exposes fn I use to put git branch in statusline
 Plug 'tpope/vim-commentary' "to comment lines with gc
 Plug 'takac/vim-hardtime'
-Plug 'othree/xml.vim'
+" Plug 'othree/xml.vim'
 Plug 'tpope/vim-surround' "for surrounding things with parens, etc etc etc
 Plug 'neoclide/coc.nvim' "auto-completion, etc etc etc
 Plug 'KabbAmine/vCoolor.vim' "modifying color codes via a color picker
@@ -210,6 +210,8 @@ function! GotoJump()
 endfunction
 
 command! Goj call GotoJump()
+
+command! -nargs=1 -complete=arglist Argedit argedit <args> | argdedupe
 
 autocmd FileType help nnoremap <buffer> <CR> <C-]>
 autocmd FileType help nnoremap <buffer> <BS> <C-T>
