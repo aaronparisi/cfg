@@ -15,9 +15,9 @@ Plug 'grvcoelho/vim-javascript-snippets'
 " Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
 call plug#end()
 
-if executable('rg')
-  set grepprg=rg\ --no-heading\ --vimgrep\ --hidden\ --case-sensitive\ --ignore-vcs\ --glob\ '!.git'\ --glob\ '!node_modules'
-endif
+" if executable('rg')
+"   set grepprg=rg\ --no-heading\ --vimgrep\ --hidden\ --case-sensitive\ --ignore-vcs\ --glob\ '!.git'\ --glob\ '!node_modules'
+" endif
 
 set timeoutlen=1000
 set ttimeoutlen=5
