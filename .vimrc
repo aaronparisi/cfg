@@ -154,20 +154,20 @@ let g:netrw_browse_split = 0
 
 nnoremap <leader>s :source ~/.vimrc<CR>
 
-nnoremap ; :
-nnoremap : ;
+" nnoremap ; :
+" nnoremap : ;
 " nnoremap n nzz
 " nnoremap N Nzz
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak
-set nowrapscan
+set wrapscan
 
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
-inoremap jfj <Esc>:w<CR>
+inoremap jfj <Esc>:w<ENTER>
 
 let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
