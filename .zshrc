@@ -38,10 +38,10 @@ alias ls='gls --group-directories-first -F -a --color=never'
 
 alias python="python3"
 
-function chpwd_do_ls () {
-	ls
-}
-chpwd_functions=( chpwd_do_ls )
+# function chpwd_do_ls () {
+# 	ls
+# }
+# chpwd_functions=( chpwd_do_ls )
 
 declare -a SCOLDS
 SCOLDS=(
