@@ -154,8 +154,8 @@ let g:netrw_browse_split = 0
 
 nnoremap <leader>s :source ~/.vimrc<CR>
 
-" nnoremap ; :
-" nnoremap : ;
+nnoremap ; :
+nnoremap : ;
 " nnoremap n nzz
 " nnoremap N Nzz
 
