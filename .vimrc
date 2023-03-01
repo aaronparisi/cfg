@@ -128,7 +128,7 @@ function! GetFoldLevel(lnum)
     return this_indent + 1
   elseif this_indent < prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*\).*$')
     return this_indent + 1
-  elseif this_indent < prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*\].*$')
+  elseif this_indent <= prev_indent && this_indent >= next_indent && (getline(a:lnum) =~? '\v^\s*\].*$')
     return this_indent + 1
   elseif this_indent == next_indent || this_indent > next_indent
     return this_indent
@@ -156,12 +156,12 @@ nnoremap <leader>s :source ~/.vimrc<CR>
 
 nnoremap ; :
 nnoremap : ;
-" nnoremap n nzz
-" nnoremap N Nzz
+nnoremap n nzz
+nnoremap N Nzz
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak
-set wrapscan
+set nowrapscan
 
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
