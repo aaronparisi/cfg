@@ -156,8 +156,8 @@ nnoremap <leader>s :source ~/.vimrc<CR>
 
 nnoremap ; :
 nnoremap : ;
-nnoremap n nzz
-nnoremap N Nzz
+" nnoremap n nzz
+" nnoremap N Nzz
 
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 set wrap linebreak
