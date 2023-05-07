@@ -73,7 +73,7 @@ set diffopt+=foldcolumn:0
 set foldmethod=expr
 set foldexpr=GetFoldLevel(v:lnum)
 set foldenable
-set foldlevel=0
+set foldlevel=9999
 set foldcolumn=0
 set foldminlines=0
 function! GetIndentLevel(lnum)
@@ -137,7 +137,7 @@ function! GetFoldLevel(lnum)
   endif
 endfunction
 function! MyFoldText()
-  let ftext = " |-----><-----|"
+  let ftext = " --><--"
   let endtext = trim(getline(v:foldend))
   if strchars(endtext) > 20
     let endtext = slice(endtext, 0, 20) . "~"
@@ -185,7 +185,7 @@ autocmd BufNewFile *.html 0r ~/.vim/templates/html.skel
 
 set scrolloff=2
 
-set hlsearch
+set nohlsearch
 set incsearch
 
 autocmd FileType help setlocal number relativenumber
@@ -243,6 +243,42 @@ nnoremap f z
 nnoremap ff zz
 nnoremap [f [z
 nnoremap ]f ]z
+
+function! GoToNextLineAtCurrentIndent()
+  let l:current_indent = indent('.')
+  let l:line_num = line('.') + 1
+  while l:line_num <= line('$')
+    let l:test_line_indent = indent(l:line_num)
+    let l:test_line_content = getline(l:line_num)
+    if l:test_line_content !~ '^\s*$' && l:test_line_indent < l:current_indent
+      echo 'End of current indent level'
+      break
+    elseif l:test_line_indent ==# l:current_indent && l:test_line_content !~ '^\s*$' && l:test_line_content !~ '^\s*\}\s*$'
+      call cursor(line_num, 1)
+      break
+    endif
+    let l:line_num += 1
+  endwhile
+endfunction
+nnoremap <leader>j :call GoToNextLineAtCurrentIndent()<CR>zz
+
+function GoToPreviousLineAtCurrentIndent()
+  let l:current_indent = indent('.')
+  let l:line_num = line('.') - 1
+  while l:line_num >= 1
+    let l:test_line_indent = indent(l:line_num)
+    let l:test_line_content = getline(l:line_num)
+    if l:test_line_content !~ '^\s*$' && l:test_line_indent < l:current_indent
+      echo 'End of current indent level'
+      break
+    elseif l:test_line_indent ==# l:current_indent && l:test_line_content !~ '^\s*$' && l:test_line_content !~ '^\s*\}\s*$'
+      call cursor(line_num, 1)
+      break
+    endif
+    let l:line_num -= 1
+  endwhile
+endfunction
+nnoremap <leader>k :call GoToPreviousLineAtCurrentIndent()<CR>zz
 
 set report=0
 set display+=lastline
