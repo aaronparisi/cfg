@@ -260,7 +260,7 @@ function! GoToNextLineAtCurrentIndent()
     let l:line_num += 1
   endwhile
 endfunction
-nnoremap <leader>j :call GoToNextLineAtCurrentIndent()<CR>zz
+nnoremap <leader>j :call GoToNextLineAtCurrentIndent()<CR>zz^
 
 function GoToPreviousLineAtCurrentIndent()
   let l:current_indent = indent('.')
@@ -278,7 +278,7 @@ function GoToPreviousLineAtCurrentIndent()
     let l:line_num -= 1
   endwhile
 endfunction
-nnoremap <leader>k :call GoToPreviousLineAtCurrentIndent()<CR>zz
+nnoremap <leader>k :call GoToPreviousLineAtCurrentIndent()<CR>zz^
 
 set report=0
 set display+=lastline
