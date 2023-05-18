@@ -12,7 +12,7 @@ Plug 'tpope/vim-vinegar' "provides functionality to enhance the use of netrw
 Plug 'moll/vim-node'
 Plug 'myhere/vim-nodejs-complete'
 Plug 'grvcoelho/vim-javascript-snippets'
-" Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
+Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
 call plug#end()
 
 " if executable('rg')
@@ -146,8 +146,6 @@ function! MyFoldText()
 endfunction
 set foldtext=MyFoldText()
 
-set matchpairs+=<:>
-
 let g:netrw_liststyle = 0
 let g:netrw_banner = 0
 let g:netrw_browse_split = 0
@@ -241,8 +239,8 @@ nnoremap z f
 nnoremap Z F
 nnoremap f z
 nnoremap ff zz
-nnoremap [f [z
-nnoremap ]f ]z
+nnoremap [f [z^
+nnoremap ]f ]z^
 
 function! GoToNextLineAtCurrentIndent()
   let l:current_indent = indent('.')
@@ -253,7 +251,8 @@ function! GoToNextLineAtCurrentIndent()
     if l:test_line_content !~ '^\s*$' && l:test_line_indent < l:current_indent
       echo 'End of current indent level'
       break
-    elseif l:test_line_indent ==# l:current_indent && l:test_line_content !~ '^\s*$' && l:test_line_content !~ '^\s*\}\s*$'
+    " elseif l:test_line_indent ==# l:current_indent && l:test_line_content !~ '^\s*$' && l:test_line_content !~ '^\s*\}\s*$'
+    elseif l:test_line_indent ==# l:current_indent && l:test_line_content =~ '[[:alnum:]]'
       call cursor(line_num, 1)
       break
     endif
