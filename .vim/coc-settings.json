@@ -11,9 +11,9 @@
   "suggest.autoTrigger": "none",
   "suggest.noselect": false,
   "diagnostic.highlightLimit": 0,
-  "diagnostic.enable": false,
+  "diagnostic.enable": true,
   "diagnostic.enableSign": false,
   "diagnostic.enableMessage": "never",
   "diagnostic.messageTarget" : "echo",
-  "hover.target": "echo",
+  "hover.target": "echo"
 }

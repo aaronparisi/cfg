@@ -315,13 +315,12 @@ let MyBlack = 'black'
 let MyWhite = '7'
 let MyAccent = 'yellow'
 
-" this is a comment...
 execute 'highlight normal ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight folded ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
-execute 'highlight cursorlinenr ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=underline'
+execute 'highlight cursorlinenr ctermbg=' . MyBlack . ' ctermfg=' . '14' . ' cterm=underline'
 execute 'highlight quickfixline ctermbg=' . MyWhite . ' ctermfg=' . MyBlack . ' cterm=none'
 execute 'highlight cursorline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=underline'
-execute 'highlight linenr ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
+execute 'highlight linenr ctermbg=' . MyBlack . ' ctermfg=' . '14'
 execute 'highlight cursearch ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight search ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight pmenu ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
@@ -335,7 +334,6 @@ execute 'highlight cocwarninghighlight ctermbg=' . MyBlack
 " execute 'highlight error ctermbg=' . MyBlack
 execute 'highlight clear error'
 execute 'highlight clear helpError'
-execute 'highlight clear helpNote'
 execute 'highlight clear helpWarning'
 execute 'highlight clear helpDeprecated'
 execute 'highlight clear todo'
@@ -346,9 +344,9 @@ execute 'highlight cocerrorfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cocwarningfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cocinfofloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cochintfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight errormsg ctermbg=8 ctermfg=' . MyBlack
-execute 'highlight warningmsg ctermbg=8 ctermfg=' . MyBlack
-execute 'highlight specialkey ctermbg=0 ctermfg=8'
+execute 'highlight errormsg ctermbg=1 ctermfg=' . MyBlack
+execute 'highlight warningmsg ctermbg=1 ctermfg=' . MyBlack
+execute 'highlight specialkey ctermbg=2 ctermfg=8'
 execute 'highlight nontext ctermbg=0 ctermfg=' . MyWhite
 execute 'highlight incsearch ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight diffadd ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
