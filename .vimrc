@@ -183,7 +183,7 @@ autocmd BufNewFile *.html 0r ~/.vim/templates/html.skel
 
 set scrolloff=2
 
-set nohlsearch
+set hlsearch
 set incsearch
 
 autocmd FileType help setlocal number relativenumber
@@ -299,7 +299,7 @@ endfunction
 
 command! -nargs=+ BuffGrep call BuffersGrep(<q-args>)
 
-syntax off
+syntax on
 set background=dark
 colorscheme default
 
@@ -314,6 +314,7 @@ let MyBlack = 'black'
 let MyWhite = '7'
 let MyAccent = 'yellow'
 
+" this is a comment...
 execute 'highlight normal ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight folded ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight cursorlinenr ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=underline'

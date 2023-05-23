@@ -25,6 +25,7 @@ HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=5000
 HISTDUP=erase
+setopt extended_glob
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
@@ -129,8 +130,8 @@ function git_branch_name() {
 setopt prompt_subst
 
 PROMPT=$'
-%F{white}\u256d %~ $(git_branch_name)
-\u2570 %# %f'
+%F{red}\u256d %~ %f%F{white}$(git_branch_name)%f
+%F{red}\u2570 %# %f'
 
 setopt auto_cd
 
@@ -144,3 +145,7 @@ zstyle ':completion:*' matcher-list '' \
   'm:{a-z\-}={A-Z\_}' \
   'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
