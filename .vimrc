@@ -56,7 +56,7 @@ set iskeyword-=_
 set iskeyword-=-
 
 hi clear CursorLine
-set cursorlineopt=number
+set cursorlineopt=both
 set cursorline
 
 set belloff=insertmode,spell
@@ -317,9 +317,10 @@ let MyAccent = 'yellow'
 
 execute 'highlight normal ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight folded ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
-execute 'highlight cursorlinenr ctermbg=' . MyBlack . ' ctermfg=' . '14' . ' cterm=underline'
+execute 'highlight cursorlinenr ctermbg=' . '8' . ' ctermfg=' . '14' . ' cterm=none'
 execute 'highlight quickfixline ctermbg=' . MyWhite . ' ctermfg=' . MyBlack . ' cterm=none'
-execute 'highlight cursorline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=underline'
+" execute 'highlight cursorline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite . ' cterm=underline'
+execute 'highlight cursorline ctermbg=8 cterm=none'
 execute 'highlight linenr ctermbg=' . MyBlack . ' ctermfg=' . '14'
 execute 'highlight cursearch ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight search ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
