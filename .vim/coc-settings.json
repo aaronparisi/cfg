@@ -2,7 +2,6 @@
   "coc.preferences.formatOnSaveFiletypes": [],
   "coc.preferences.jumpCommand": "edit",
   "signature.target": "echo",
-  "html.enable": true,
   "html.format.enable": true,
   "html.autoCreateQuotes": false,
   "html.autoClosingTags": true,

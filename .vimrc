@@ -12,12 +12,16 @@ Plug 'tpope/vim-vinegar' "provides functionality to enhance the use of netrw
 Plug 'moll/vim-node'
 Plug 'myhere/vim-nodejs-complete'
 Plug 'grvcoelho/vim-javascript-snippets'
-Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
+" Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 call plug#end()
 
 " if executable('rg')
 "   set grepprg=rg\ --no-heading\ --vimgrep\ --hidden\ --case-sensitive\ --ignore-vcs\ --glob\ '!.git'\ --glob\ '!node_modules'
 " endif
+
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 
 set timeoutlen=1000
 set ttimeoutlen=5
@@ -235,6 +239,9 @@ let @/ = ""
 
 inoremap <silent><expr> <C-k> coc#refresh()
 nnoremap <Leader>d :CocDiagnostics<Enter>
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+nnoremap <Leader>o :noh<Enter>
 
 nnoremap z f
 nnoremap Z F
@@ -329,6 +336,7 @@ execute 'highlight pmenusel ctermbg=' . MyAccent.  ' ctermfg=' . MyBlack
 execute 'highlight visual ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight vertsplit ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight endofbuffer ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
+execute 'highlight CocMenuSel ctermbg=' . '1'
 execute 'highlight cocunusedhighlight ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight cocerrorhighlight ctermbg=' . MyBlack
 execute 'highlight cocwarninghighlight ctermbg=' . MyBlack
