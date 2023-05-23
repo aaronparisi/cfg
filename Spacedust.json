@@ -345,9 +345,11 @@
   "Only The Default BG Color Uses Transparency" : true,
   "Minimum Contrast" : 0,
   "Ansi 15 Color" : {
-    "Green Component" : 1,
-    "Red Component" : 0.99683916568756104,
-    "Blue Component" : 0.94478845596313477
+    "Red Component" : 0.5134735107421875,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.45618514384119968,
+    "Alpha Component" : 1,
+    "Green Component" : 0.5134735107421875
   },
   "Unicode Version" : 8,
   "Ansi 6 Color" : {
