@@ -234,6 +234,7 @@ set nospell
 let @/ = ""
 
 inoremap <silent><expr> <C-k> coc#refresh()
+nnoremap <Leader>d :CocDiagnostics<Enter>
 
 nnoremap z f
 nnoremap Z F
@@ -329,6 +330,15 @@ execute 'highlight visual ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight vertsplit ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight endofbuffer ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight cocunusedhighlight ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
+execute 'highlight cocerrorhighlight ctermbg=' . MyBlack
+execute 'highlight cocwarninghighlight ctermbg=' . MyBlack
+" execute 'highlight error ctermbg=' . MyBlack
+execute 'highlight clear error'
+execute 'highlight clear helpError'
+execute 'highlight clear helpNote'
+execute 'highlight clear helpWarning'
+execute 'highlight clear helpDeprecated'
+execute 'highlight clear todo'
 execute 'highlight matchparen ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight statusline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
 execute 'highlight statuslinenc ctermbg=' . MyBlack . ' ctermfg=15'
@@ -336,8 +346,8 @@ execute 'highlight cocerrorfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cocwarningfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cocinfofloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
 execute 'highlight cochintfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight errormsg ctermbg=1 ctermfg=' . MyBlack
-execute 'highlight warningmsg ctermbg=1 ctermfg=' . MyBlack
+execute 'highlight errormsg ctermbg=8 ctermfg=' . MyBlack
+execute 'highlight warningmsg ctermbg=8 ctermfg=' . MyBlack
 execute 'highlight specialkey ctermbg=0 ctermfg=8'
 execute 'highlight nontext ctermbg=0 ctermfg=' . MyWhite
 execute 'highlight incsearch ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
