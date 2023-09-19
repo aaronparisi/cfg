@@ -10,7 +10,7 @@ Plug 'tpope/vim-vinegar' "provides functionality to enhance the use of netrw
 Plug 'moll/vim-node'
 Plug 'myhere/vim-nodejs-complete'
 Plug 'grvcoelho/vim-javascript-snippets'
-" Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
+Plug 'jiangmiao/auto-pairs' "things like auto {}, '', [], ()"
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 call plug#end()
@@ -19,6 +19,7 @@ autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 
 let mapleader = ","
 
+set mouse=a
 set ttimeoutlen=5
 set number relativenumber
 set laststatus=2
@@ -44,7 +45,8 @@ set iskeyword-=-
 set cursorlineopt=both
 set cursorline
 set belloff=insertmode,spell
-set visualbell
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
 set showcmd
 set ignorecase
 set fillchars=foldopen:-,foldclose:+,foldsep:\|,fold:\ ,vert:\|,diff:-
@@ -263,46 +265,11 @@ let MyWhite = '7'
 let MyAccent = 'yellow'
 
 hi clear CursorLine
-execute 'highlight normal ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
-execute 'highlight folded ctermbg=' . MyBlack
-execute 'highlight cursorlinenr ctermbg=' . MyBlack ' ctermfg=' . '14' . ' cterm=underline'
-execute 'highlight quickfixline cterm=underline'
-execute 'highlight cursorline cterm=none'
-execute 'highlight linenr ctermbg=' . MyBlack . ' ctermfg=' . '14'
-execute 'highlight cursearch ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight search ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight pmenu ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight pmenusel ctermbg=' . MyAccent.  ' ctermfg=' . MyBlack
-execute 'highlight visual ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight vertsplit ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight endofbuffer ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
-execute 'highlight CocMenuSel cterm=underline'
-execute 'highlight cocunusedhighlight ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
-execute 'highlight cocerrorhighlight ctermbg=' . MyBlack
-execute 'highlight cocwarninghighlight ctermbg=' . MyBlack
-execute 'highlight clear error'
-execute 'highlight clear helpError'
-execute 'highlight clear helpWarning'
-execute 'highlight clear helpDeprecated'
-execute 'highlight clear todo'
-execute 'highlight matchparen ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight statusline ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
-execute 'highlight statuslinenc ctermbg=' . MyBlack . ' ctermfg=15'
-execute 'highlight cocerrorfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight cocwarningfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight cocinfofloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight cochintfloat ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight errormsg ctermbg=1 ctermfg=' . MyBlack
-execute 'highlight warningmsg ctermbg=1 ctermfg=' . MyBlack
-execute 'highlight specialkey ctermbg=0 ctermfg=8'
-execute 'highlight nontext ctermbg=0 ctermfg=' . MyWhite
-execute 'highlight incsearch ctermbg=' . MyBlack . ' ctermfg=' . MyWhite
-execute 'highlight diffadd ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight diffchange ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
-execute 'highlight diffdelete ctermbg=' . '1' . ' ctermfg=' . MyBlack
-execute 'highlight difftext ctermbg=' . MyAccent . ' ctermfg=' . MyBlack
-execute 'highlight colorcolumn ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
-execute 'highlight foldcolumn ctermbg=' . MyWhite . ' ctermfg=' . MyBlack
+highlight clear Todo
+highlight statuslinenc ctermfg=0
+highlight matchparen ctermbg=1 ctermfg=7
+highlight diffchange ctermbg=0
+highlight difftext ctermfg=8
 
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
       \ | wincmd p | diffthis

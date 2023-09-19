@@ -3,6 +3,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$PATH:$HOME/custom-git-commands/
+export PRETTIER_CONFIG_PATH=~/.prettierrc
 
 export MANPAGER="vim -M +MANPAGER -c 'syntax off' -c 'set foldlevel=9999' -c 'set number relativenumber' -"
 
