@@ -1,0 +1,35 @@
+{
+  "vim.autoindent": true,
+  "vim.camelCaseMotion.enable": true,
+  "vim.cursorStylePerMode.insert": "underline",
+  "vim.cursorStylePerMode.normal": "block",
+  "vim.cursorStylePerMode.visual": "line",
+  "vim.cursorStylePerMode.visualblock": "block-outline",
+  "vim.hlsearch": true,
+  "vim.ignorecase": true,
+  "vim.matchpairs": "(:),{:},[:]",
+  "vim.mouseSelectionGoesIntoVisualMode": true,
+  "vim.vimrc.enable": true,
+  "vim.wrapscan": false,
+  "vim.leader": ",",
+  "editor.tabSize": 2,
+  "prettier.useTabs": true,
+  "prettier.tabWidth": 2,
+  "prettier.singleQuote": true,
+  "prettier.singleAttributePerLine": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "editor.occurrencesHighlight": false,
+  "editor.lineNumbers": "relative",
+  "editor.minimap.enabled": false,
+  "editor.fontFamily": "IBM Plex Mono, Monaco, 'Courier New', monospace",
+  "terminal.integrated.fontFamily": "IBM Plex Mono",
+  "editor.fontSize": 13,
+  "workbench.colorTheme": "Dracula"
+}
